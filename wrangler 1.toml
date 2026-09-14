@@ -1,0 +1,32 @@
+# DocBrisk SEO Worker — Cloudflare config
+#
+# Upload this file to the docbrisk-seo GitHub repo, renamed to exactly:
+#     wrangler.toml
+# It must sit in the repo root, next to seo-worker.js.
+#
+# No KV namespace and no secrets are needed: this Worker only reads a public
+# file from GitHub and rewrites some meta tags before returning it.
+
+name = "docbrisk-seo"
+main = "seo-worker.js"
+compatibility_date = "2024-11-01"
+
+# Routes are deliberately narrow. The Worker that already serves docbrisk.com
+# keeps handling the homepage and every asset — this one only takes the paths
+# below. Do NOT add "docbrisk.com/*" here, or it would take over the site.
+#
+# You can add these three routes in the Cloudflare dashboard instead
+# (Worker -> Settings -> Domains & Routes), which is easier on a phone. If you
+# do it there, delete or leave this block as-is; dashboard routes win.
+
+[[routes]]
+pattern = "docbrisk.com/tool/*"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/sitemap.xml"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/robots.txt"
+zone_name = "docbrisk.com"
