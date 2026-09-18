@@ -1,0 +1,46 @@
+# DocBrisk SEO Worker — Cloudflare config
+#
+# Goes in the docbrisk-seo GitHub repo root, next to seo-worker.js.
+#
+# Routes are deliberately narrow: the Worker that already serves docbrisk.com
+# keeps the homepage and every asset. Do NOT add "docbrisk.com/*" here.
+#
+# NEW in this version: /about /pricing /privacy /terms are routed here too.
+# They are listed in the sitemap, but before this change they never reached
+# this Worker, so Google saw the homepage HTML at those URLs.
+#
+# If you manage routes in the Cloudflare dashboard instead
+# (Worker -> Settings -> Domains & Routes), add the same seven patterns there.
+# Dashboard routes win over this file.
+
+name = "docbrisk-seo"
+main = "seo-worker.js"
+compatibility_date = "2024-11-01"
+
+[[routes]]
+pattern = "docbrisk.com/tool/*"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/sitemap.xml"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/robots.txt"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/about"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/pricing"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/privacy"
+zone_name = "docbrisk.com"
+
+[[routes]]
+pattern = "docbrisk.com/terms"
+zone_name = "docbrisk.com"
