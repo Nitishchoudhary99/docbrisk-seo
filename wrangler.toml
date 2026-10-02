@@ -1,0 +1,41 @@
+# DocBrisk SEO Worker (docbrisk-seo repo) - Cloudflare config
+#
+# This Worker serves the WHOLE site: every page, /sw.js (with the ad code),
+# /manifest.webmanifest, static files from the My-website repo, the Excel
+# add-ins pages, downloads and the /addins-api/ endpoints. The older file routed
+# only /tool/*, /about, /pricing, /privacy, /terms, /sitemap.xml and /robots.txt
+# here, so every other path went to the other Worker, which has none of that.
+#
+# A Route takes priority over a Custom Domain on the same hostname, so
+# docbrisk.com/* below wins over the Worker that holds docbrisk.com as its
+# Custom Domain. Keep that Custom Domain; it is harmless.
+# If another Worker has a ROUTE (not a Custom Domain) "docbrisk.com/*",
+# delete that route first, or this deploy fails with "route already assigned".
+
+name = "docbrisk-seo"
+main = "seo-worker.js"
+compatibility_date = "2024-11-01"
+
+[[routes]]
+pattern = "docbrisk.com/*"
+zone_name = "docbrisk.com"
+
+# Uncomment only if a proxied DNS record for "www" exists (DNS -> Records).
+# [[routes]]
+# pattern = "www.docbrisk.com/*"
+# zone_name = "docbrisk.com"
+
+# ---- Add-ins storage: FREE Workers KV namespace "docbrisk-addins" (no card needed) ----
+[[kv_namespaces]]
+binding = "ADDINS_KV"
+id = "8721220ca9a54fbc8cf78d1411613bd8"
+
+# ---- Or R2 later (needs a card on file; files up to 100 MB) ----
+# Create bucket "docbrisk-addins" first, then uncomment:
+# [[r2_buckets]]
+# binding = "ADDINS"
+# bucket_name = "docbrisk-addins"
+
+# Secrets go in the dashboard, never here; GitHub deploys keep them:
+#   docbrisk-seo -> Settings -> Variables and Secrets -> Add -> type Secret
+#     ADDINS_ADMIN_KEY   24+ random characters (you may reuse your ADMIN_KEY value)
