@@ -71,7 +71,7 @@ const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
 const LASTMOD = '2026-10-10';          // bump when page content changes
-const BUILD = '2026-10-10b';              // bump on every deploy of this Worker
+const BUILD = '2026-10-11a';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
@@ -407,7 +407,7 @@ const TOOLS = {
  "ocr-pdf": {
   "t": "OCR: Turn Scans into Searchable PDF or Editable Word",
   "d": "Turn scans and phone photos into a searchable PDF that looks identical, or an editable Word file. Straightens tilted pages and cleans up faint or shadowed scans, on your device. 3 free uses.",
-  "l": "Recognise the text in scans, phone photos and image-only PDFs. Get a searchable PDF that looks exactly like the original, with text you can select, search and copy; or an editable Word file where logos, photos and layout stay in place. Built for real-world scans: tilted pages are straightened, faded text is boosted, and pages with shadows or uneven lighting are cleaned up and read again automatically. Long PDFs are read one page at a time (two at once on capable devices), so they work on phones too. Everything runs on your device; nothing is uploaded.",
+  "l": "Recognise the text in scans, phone photos and image-only PDFs. Get a searchable PDF that looks exactly like the original, with text you can select, search and copy; or an editable Word file where logos, photos and layout stay in place. Built for real-world scans: tilted pages are straightened, faded text is boosted, and pages with shadows or uneven lighting are cleaned up and read again automatically. Long PDFs are read one page at a time (two at once on capable devices), so they work on phones too. Everything runs on your device; nothing is uploaded. Phone photos of a page lying on a table are found and flattened into a straight scan, two-column pages and side-by-side blocks are read in the right order, and lines the engine skips on a first pass are found and read again. Searchable PDF and Word output work in every supported language, Hindi included.",
   "steps": [
    "Add a scanned PDF or a photo of a document.",
    "Choose Searchable PDF, Editable Word or Plain text, and the language.",
@@ -437,7 +437,7 @@ const TOOLS = {
    ],
    [
     "Which languages are supported?",
-    "Plain text works in 15 languages including Hindi, Bengali, Tamil, Telugu and Arabic, plus a Hindi + English option for documents that mix both. Searchable PDF and Word output support English and other Latin-alphabet languages."
+    "16 languages including Hindi, Bengali, Tamil, Telugu, Arabic and Chinese, plus a Hindi + English option for documents that mix both. Every language gets all three outputs: plain text, a searchable PDF whose text can be copied and searched, and an editable Word file."
    ]
   ],
   "st": "OCR PDF to Editable Word & Searchable PDF",
