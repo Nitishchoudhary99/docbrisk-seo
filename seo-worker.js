@@ -1,3 +1,4 @@
+import Anthropic from '@anthropic-ai/sdk';
 /* ==========================================================================
    DocBrisk — SEO Worker v4
 
@@ -71,7 +72,7 @@ const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
 const LASTMOD = '2026-10-10';          // bump when page content changes
-const BUILD = '2026-10-10d';              // bump on every deploy of this Worker
+const BUILD = '2026-10-11a';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
@@ -7566,7 +7567,8 @@ async function addinsApi(request, env, ctx, url) {
     const s = addinStore(env);
     return jsonRes({ ok: true, api: ADDINS_API_VERSION, build: BUILD, storage: await storageState(env),
       storageType: s ? s.kind : '', maxMB: s ? Math.round(s.maxBytes / 1048576) : 0, adminKey: adminKeyState(env),
-      licenseKey: await licenseKeyState(env), captcha: env && env.TURNSTILE_SECRET ? 'on' : 'off', payments: proMode(env) });
+      licenseKey: await licenseKeyState(env), captcha: env && env.TURNSTILE_SECRET ? 'on' : 'off', payments: proMode(env),
+      ai: env && env.ANTHROPIC_API_KEY ? 'on' : 'off' });
   }
   if (p === '/addins-api/pro/plans' && (m === 'GET' || m === 'HEAD')) {
     // Public: the page shows the Pro form only when payments, the signing key and storage are all ready.
@@ -7585,6 +7587,7 @@ async function addinsApi(request, env, ctx, url) {
   if (p === '/addins-api/pro/start' && m === 'POST') return proStart(request, env, ctx, url, store);
   if (p === '/addins-api/pro/claim' && m === 'POST') return proClaim(request, env, ctx, url, store);
   if (p === '/addins-api/pro/webhook' && m === 'POST') return proWebhook(request, env, store);
+  if (p === '/addins-api/ai/formula' && m === 'POST') return aiFormula(request, env, ctx, url, store);
 
   // Everything below is admin-only.
   if (!(await isAddinAdmin(request, env))) {
@@ -7670,6 +7673,8 @@ async function addinsApi(request, env, ctx, url) {
   }
 
   if (p === '/addins-api/pro/issue' && m === 'POST') return proIssueManual(request, env, store);
+  if (p === '/addins-api/ai/usage' && m === 'GET') return aiUsage(store, url);
+  if (p === '/addins-api/ai/block' && m === 'POST') return aiBlock(request, store);
   if (p === '/addins-api/licenses' && m === 'GET') {
     const rows = await listLicenses(store);
     return jsonRes({ total: rows.length, items: rows.slice(0, 200), licenseKey: await licenseKeyState(env), captcha: env.TURNSTILE_SECRET ? 'on' : 'off', payments: proMode(env) });
@@ -7692,6 +7697,134 @@ async function addinsApi(request, env, ctx, url) {
     return jsonRes({ ok: true });
   }
   return jsonRes({ error: 'Not found.' }, 404);
+}
+
+/* =====================================================================
+   AI FORMULA PROXY: the Excel add-in's "AI Formula" works without the user's own Anthropic key.
+   The add-in sends its DocBrisk key (DBK1-...); this Worker checks it, counts the use, and asks Claude
+   with the site's own Anthropic key. Only formula work is possible: the system prompt, the model and the
+   output size are fixed here, and only the formula and a short explanation go back.
+
+   Secret on this Worker (Settings -> Variables and Secrets -> type Secret):
+     ANTHROPIC_API_KEY   from console.anthropic.com (set a monthly spend limit there too)
+   Optional plain variables:
+     AI_PRO_PER_DAY      formulas a day for a Pro key            (default 100)
+     AI_FREE_PER_DAY     formulas a day for a free key           (default 3; 0 = Pro only)
+     ANTHROPIC_BASE_URL  optional: a Cloudflare AI Gateway URL for logs, caching and spend alerts
+
+   POST /addins-api/ai/formula   { key, request, context, client }  ->  { ok, formula, why, left, limit, tier }
+   Admin: GET  /addins-api/ai/usage?date=YYYY-MM-DD   uses per key that day
+          POST /addins-api/ai/block  { id, block }    stop / allow AI for one key id (refunds, abuse)
+   Stored: _aiuse/<date>/<key id>  { n }   and   _aiblock/<key id>
+   Workers KV free plan allows 1,000 writes a day; each AI request writes once.
+   ===================================================================== */
+const AI_MODEL = 'claude-opus-5-5';
+const AI_MAX_REQUEST = 600, AI_MAX_CONTEXT = 5000;
+const AI_SYSTEM =
+  'You write Microsoft Excel formulas for office users in India (accounts, MIS, sales, HR).\n' +
+  'Reply in exactly this shape and nothing else:\n' +
+  'FORMULA: <one formula starting with =, written for the given cell, with English function names and commas between arguments>\n' +
+  'WHY: <one or two short sentences in plain English saying what it does and anything to check>\n' +
+  'Rules: use the real column letters and rows from the table description. Prefer functions that work in Excel 2016 ' +
+  '(SUMIFS, COUNTIFS, INDEX/MATCH, IFERROR, TEXT, DATEDIF) unless the user says they have Excel 365; when an Excel 365 ' +
+  'function such as XLOOKUP, FILTER or UNIQUE is clearly better, use it and say so in WHY. The formula must be ready to ' +
+  'fill down. If the request is not about an Excel formula, or cannot be done with a formula, write FORMULA: none and explain in WHY.';
+
+const aiLimit = (env, pro) => {
+  const v = pro ? env.AI_PRO_PER_DAY : env.AI_FREE_PER_DAY;
+  const n = parseInt(v, 10);
+  return Number.isFinite(n) && n >= 0 ? n : (pro ? 100 : 3);
+};
+
+function aiParse(text) {
+  let formula = null, why = '';
+  for (const raw of String(text || '').replace(/\r/g, '').split('\n')) {
+    const line = raw.trim().replace(/^`+|`+$/g, '');
+    if (/^FORMULA:/i.test(line)) formula = line.slice(8).trim().replace(/^`+|`+$/g, '');
+    else if (/^WHY:/i.test(line)) why = line.slice(4).trim();
+    else if (why && line) why += ' ' + line;
+    else if (formula === null && line.startsWith('=')) formula = line;
+  }
+  if (formula !== null && !formula.startsWith('=')) formula = null;
+  return { formula, why: why.slice(0, 600) };
+}
+
+async function aiFormula(request, env, ctx, url, store) {
+  if (request.headers.get('Origin') && !sameSite(request, url)) return jsonRes({ error: 'Not allowed.', code: 'origin' }, 403);
+  if (!/^application\/json/i.test(request.headers.get('Content-Type') || '')) return jsonRes({ error: 'Send JSON.' }, 415);
+  if (+(request.headers.get('Content-Length') || 0) > 12000) return jsonRes({ error: 'Request too large.', code: 'size' }, 413);
+  if (!env.ANTHROPIC_API_KEY) return jsonRes({ error: 'AI Formula is not switched on on docbrisk.com yet.', code: 'ai_off' }, 503);
+  if (await licenseKeyState(env) !== 'set') return jsonRes({ error: 'Keys cannot be checked just now.', code: 'no_license_key' }, 503);
+  let b;
+  try { b = await request.json(); } catch (e) { return jsonRes({ error: 'Could not read the request.' }, 400); }
+  const ask = clip(b && b.request, AI_MAX_REQUEST), context = clip(b && b.context, AI_MAX_CONTEXT);
+  if (ask.length < 3) return jsonRes({ error: 'Describe what the formula should do.', code: 'empty' }, 400);
+
+  // the DocBrisk key: valid signature, not expired, not blocked
+  const lic = await checkLicense(env, b && b.key);
+  if (!lic.valid) return jsonRes({ error: 'Activate a DocBrisk key first (DocBrisk Pro button). A free key gives ' + aiLimit(env, false) + ' AI formulas a day.', code: 'no_key' }, 401);
+  const today = new Date().toISOString().slice(0, 10);
+  if (lic.expires !== 'never' && lic.expires < today) return jsonRes({ error: 'Your key expired on ' + lic.expires + '. Renew Pro to keep using AI Formula.', code: 'expired' }, 402);
+  const pro = lic.tier === 'Pro';
+  const limit = aiLimit(env, pro);
+  if (limit === 0) return jsonRes({ error: 'AI Formula is part of DocBrisk Pro.', code: 'not_pro' }, 402);
+  if (await store.getJson('_aiblock/' + lic.id)) return jsonRes({ error: 'AI Formula is switched off for this key. Contact DocBrisk support.', code: 'blocked' }, 403);
+
+  // a few seconds between two requests of one key stops loops and double clicks
+  const rl = new Request(SITE + '/__rl/ai/' + lic.id);
+  try {
+    if (await caches.default.match(rl)) return jsonRes({ error: 'One moment: wait a few seconds between two formulas.', code: 'rate' }, 429);
+    ctx.waitUntil(caches.default.put(rl, new Response('1', { headers: { 'Cache-Control': 'public, max-age=4' } })).catch(() => {}));
+  } catch (e) { /* best effort */ }
+
+  const useKey = '_aiuse/' + today + '/' + lic.id;
+  const prev = await store.getJson(useKey);
+  const used = prev && prev.value ? +prev.value.n || 0 : 0;
+  if (used >= limit) {
+    return jsonRes({ error: pro ? 'You have used today\'s ' + limit + ' AI formulas. More tomorrow.'
+      : 'Your ' + limit + ' free AI formulas for today are used. With DocBrisk Pro you get ' + aiLimit(env, true) + ' a day.',
+      code: 'limit', left: 0, limit, tier: lic.tier }, 429);
+  }
+
+  let msg;
+  try {
+    const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, baseURL: env.ANTHROPIC_BASE_URL || undefined, maxRetries: 1, timeout: 60000 });
+    msg = await client.beta.messages.create({
+      model: AI_MODEL,
+      max_tokens: 4000,
+      system: AI_SYSTEM,
+      output_config: { effort: 'low' },
+      // a declined request is answered by the recommended fallback model inside the same call
+      betas: ['server-side-fallback-2026-07-01'],
+      fallbacks: 'default',
+      messages: [{ role: 'user', content: context + '\nRequest: ' + ask }]
+    });
+  } catch (e) {
+    const st = e && e.status;
+    return jsonRes({ error: st === 429 || st === 529 ? 'AI is busy just now. Try again in a minute.' : 'AI could not answer just now. Try again in a minute.', code: 'upstream' }, 502);
+  }
+  // count only answered requests
+  ctx.waitUntil(store.putRecord(useKey, { n: used + 1 }, { n: used + 1, t: lic.tier[0] }).catch(() => {}));
+  if (msg.stop_reason === 'refusal') return jsonRes({ ok: true, formula: null, why: 'This request was declined. Describe the calculation differently.', left: limit - used - 1, limit, tier: lic.tier });
+  const text = (msg.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('');
+  const r = aiParse(text);
+  return jsonRes({ ok: true, formula: r.formula, why: r.why, left: limit - used - 1, limit, tier: lic.tier });
+}
+
+async function aiUsage(store, url) {
+  const day = /^\d{4}-\d{2}-\d{2}$/.test(url.searchParams.get('date') || '') ? url.searchParams.get('date') : new Date().toISOString().slice(0, 10);
+  const rows = (await store.listEntries('_aiuse/' + day + '/')).map((x) => ({ id: x.key.split('/').pop(), n: +x.meta.n || 0, tier: x.meta.t === 'P' ? 'Pro' : 'Free' }));
+  rows.sort((a, b) => b.n - a.n);
+  return jsonRes({ date: day, keys: rows.length, requests: rows.reduce((s, r) => s + r.n, 0), items: rows.slice(0, 500) });
+}
+
+async function aiBlock(request, store) {
+  let b; try { b = await request.json(); } catch (e) { return jsonRes({ error: 'Send JSON.' }, 400); }
+  const id = String((b && b.id) || '').toLowerCase();
+  if (!/^[0-9a-f]{12}$/.test(id)) return jsonRes({ error: 'Key id is 12 hex characters (see the licence list).' }, 400);
+  if (b.block === false) await store.del(['_aiblock/' + id]);
+  else await store.putRecord('_aiblock/' + id, { at: new Date().toISOString() }, null);
+  return jsonRes({ ok: true, id, blocked: b.block !== false });
 }
 
 /* ---------- /addins page: server-rendered list and structured data ---------- */

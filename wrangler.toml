@@ -39,3 +39,7 @@ id = "8721220ca9a54fbc8cf78d1411613bd8"
 # Secrets go in the dashboard, never here; GitHub deploys keep them:
 #   docbrisk-seo -> Settings -> Variables and Secrets -> Add -> type Secret
 #     ADDINS_ADMIN_KEY   24+ random characters (you may reuse your ADMIN_KEY value)
+#     ANTHROPIC_API_KEY  for AI Formula in the Excel add-in (console.anthropic.com; set a monthly
+#                        spend limit there). Without it /addins-api/ai/formula answers "not switched on".
+# Optional plain variables (type Text): AI_PRO_PER_DAY (100), AI_FREE_PER_DAY (3), ANTHROPIC_BASE_URL
+# (a Cloudflare AI Gateway URL, for logs and spend alerts).

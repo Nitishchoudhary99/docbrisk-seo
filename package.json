@@ -1,0 +1,12 @@
+{
+  "name": "docbrisk-seo",
+  "private": true,
+  "type": "module",
+  "description": "docbrisk.com Worker. Cloudflare installs the dependency and bundles it on every deploy.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
+  }
+}
