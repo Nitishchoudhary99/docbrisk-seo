@@ -1304,7 +1304,7 @@ Object.assign(TOOLS, {
  "excel-dashboard": {
   "t": "Excel Dashboard Maker",
   "d": "Upload an Excel or CSV file and get suggested KPIs and charts, then a ready dashboard: live Excel, HTML, PDF, PNG, or a Power BI / Looker Studio kit.",
-  "l": "Upload any spreadsheet with a header row: sales, invoices, expenses, HR, inventory, leads or marks. DocBrisk reads every column, works out what it means (dates, amounts, quantities, regions, products, people, statuses) and suggests KPIs and charts: totals and averages, growth against the previous month, profit and margin when revenue and cost are present, target achievement, completion rates, monthly trends, breakdowns by region or channel, and top-10 rankings. Tick what you want, choose a theme, filter by region, product or date, and download. The Excel dashboard uses live formulas and native charts over a Data sheet, so it updates when you paste new data. The HTML dashboard is one file with working filters. The Power BI kit has clean data, DAX measures, a date table, a theme and a build guide; the Looker Studio kit has calculated fields and a guide. Everything runs in your browser.",
+  "l": "Upload any spreadsheet with a header row: sales, invoices, expenses, HR, inventory, leads or marks. DocBrisk reads every column, works out what it means (dates, amounts, quantities, regions, products, people, statuses) and suggests KPIs and charts: totals and averages, growth against the previous month, profit and margin when revenue and cost are present, target achievement, completion rates, monthly trends, breakdowns by region or channel, and top-10 rankings. Tick what you want, or type a question in plain English (for example: top 5 products by profit in 2026, region wise units, monthly revenue trend for South) and the chart appears. Click any bar, slice or point to filter the whole dashboard; change any chart's type, size and order. A data health check flags blanks, duplicates, typos and unusual values, trend charts show a three-period projection, and the insights call out growth, year-on-year change, unusual months and 80/20 concentration. Pick the currency and Indian or international number style, save the design, and next month's file gets the same dashboard automatically. Download it as a PowerPoint with editable charts too. The Excel dashboard uses live formulas and native charts over a Data sheet, so it updates when you paste new data. The HTML dashboard is one file with working filters. The Power BI kit has clean data, DAX measures, a date table, a theme and a build guide; the Looker Studio kit has calculated fields and a guide. Everything runs in your browser.",
   "steps": [
    "Upload the Excel or CSV file, or try the sample sales data.",
    "Check how each column was read, then tick the suggested KPIs and charts.",
@@ -1323,6 +1323,14 @@ Object.assign(TOOLS, {
    [
     "Can I use it with Power BI or Looker Studio?",
     "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."
+   ],
+   [
+    "Can I ask questions about my data?",
+    "Yes. Type a question such as \"top 5 products by profit in 2026\" or \"monthly sales trend for South\" and the chart is added to the dashboard. Questions are answered on your device."
+   ],
+   [
+    "Which downloads are free?",
+    "HTML, PDF and PNG are free. Excel, PowerPoint and the Power BI / Looker Studio kits are part of DocBrisk Pro, and every free account can try them 3 times."
    ],
    [
     "Is my data uploaded?",
