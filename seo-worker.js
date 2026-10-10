@@ -71,7 +71,7 @@ const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
 const LASTMOD = '2026-10-10';          // bump when page content changes
-const BUILD = '2026-10-11a';              // bump on every deploy of this Worker
+const BUILD = '2026-10-10c';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
@@ -1299,6 +1299,40 @@ Object.assign(TOOLS, {
  }
 });
 
+/* ---------- v5.0: Excel Dashboard Maker ---------- */
+Object.assign(TOOLS, {
+ "excel-dashboard": {
+  "t": "Excel Dashboard Maker",
+  "d": "Upload an Excel or CSV file and get suggested KPIs and charts, then a ready dashboard: live Excel, HTML, PDF, PNG, or a Power BI / Looker Studio kit.",
+  "l": "Upload any spreadsheet with a header row: sales, invoices, expenses, HR, inventory, leads or marks. DocBrisk reads every column, works out what it means (dates, amounts, quantities, regions, products, people, statuses) and suggests KPIs and charts: totals and averages, growth against the previous month, profit and margin when revenue and cost are present, target achievement, completion rates, monthly trends, breakdowns by region or channel, and top-10 rankings. Tick what you want, choose a theme, filter by region, product or date, and download. The Excel dashboard uses live formulas and native charts over a Data sheet, so it updates when you paste new data. The HTML dashboard is one file with working filters. The Power BI kit has clean data, DAX measures, a date table, a theme and a build guide; the Looker Studio kit has calculated fields and a guide. Everything runs in your browser.",
+  "steps": [
+   "Upload the Excel or CSV file, or try the sample sales data.",
+   "Check how each column was read, then tick the suggested KPIs and charts.",
+   "Pick a theme, set filters if you like, and download Excel, HTML, PDF, PNG or a Power BI / Looker Studio kit."
+  ],
+  "use": "For monthly MIS reports, sales reviews, management dashboards, and starting a Power BI or Looker Studio report from a spreadsheet.",
+  "faq": [
+   [
+    "Which files work?",
+    "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."
+   ],
+   [
+    "Is the Excel dashboard live?",
+    "Yes. The KPI cards and charts are formulas over the Data sheet, so when you paste new rows and recalculate, every number and chart updates."
+   ],
+   [
+    "Can I use it with Power BI or Looker Studio?",
+    "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."
+   ],
+   [
+    "Is my data uploaded?",
+    "No. The file is read and the dashboard is built inside your browser."
+   ]
+  ],
+  "st": "Excel Dashboard Maker: Automatic KPI Dashboard from Excel"
+ }
+});
+
 /* ---------- target searches (v4.3) ----------
    The phrases people type for each tool. Used in three places: a short
    visible "Also searched as" line on the tool page, <meta name="keywords">,
@@ -1469,6 +1503,20 @@ Object.assign(KW, {
   "fd interest calculator",
   "recurring deposit calculator",
   "fd maturity calculator"
+ ]
+});
+
+/* ---------- v5.0: target searches for the dashboard maker ---------- */
+Object.assign(KW, {
+ "excel-dashboard": [
+  "excel dashboard maker",
+  "dashboard from excel",
+  "kpi dashboard generator",
+  "automatic dashboard from excel",
+  "excel to dashboard online",
+  "create dashboard from csv",
+  "excel dashboard online free",
+  "data to dashboard"
  ]
 });
 
@@ -4894,12 +4942,200 @@ Object.assign(LANDINGS, {
   ]
  }
 });
+/* ---------- v5.0: dashboard landing pages ---------- */
+Object.assign(LANDINGS, {
+ "sales-dashboard-excel": {
+  "tool": "excel-dashboard",
+  "h1": "Sales Dashboard from Excel, Made Automatically",
+  "t": "Sales Dashboard in Excel: Make One Automatically from Your Data | DocBrisk",
+  "d": "Upload your sales sheet and get revenue, growth, profit, top products, regions and sales reps as a ready dashboard. Download as a live Excel dashboard, HTML or PDF. Free.",
+  "lead": "Upload a sales export with dates, products, regions and amounts: the KPIs and charts are picked for you.",
+  "body": [
+   "A good sales dashboard answers four questions at a glance: how much did we sell, is it growing, where does it come from, and who or what is driving it. DocBrisk finds the revenue, cost and quantity columns in your sheet and builds exactly those views: total revenue and profit with growth against last month, a monthly trend, region and channel breakdowns, and the top products and sales reps.",
+   "The Excel download is a real dashboard, not a picture: the KPI cards and charts are formulas and native Excel charts over a Data sheet, so next month you paste the new rows and it updates."
+  ],
+  "f": [
+   [
+    "What columns does a sales dashboard need?",
+    "A date, an amount (revenue or sales), and at least one category such as product, region, channel or sales rep. Cost and units add profit, margin and price per unit."
+   ],
+   [
+    "Can I filter by region or month?",
+    "Yes. Filters for the main categories and a date range are added automatically, in the preview and in the HTML dashboard."
+   ],
+   [
+    "Does it work with Tally or Zoho exports?",
+    "Yes. Export the sales register to Excel and upload it. A title block above the header row is skipped automatically."
+   ]
+  ],
+  "kw": [
+   "sales dashboard in excel",
+   "excel sales dashboard",
+   "sales dashboard maker",
+   "sales report dashboard",
+   "sales dashboard template",
+   "monthly sales dashboard"
+  ],
+  "rel": [
+   "kpi-dashboard-generator",
+   "mis-report-dashboard"
+  ]
+ },
+ "kpi-dashboard-generator": {
+  "tool": "excel-dashboard",
+  "h1": "KPI Dashboard Generator",
+  "t": "KPI Dashboard Generator: Suggested KPIs from Your Excel Data | DocBrisk",
+  "d": "Upload a spreadsheet and get the right KPIs suggested for it: totals, growth, margins, completion rates and top performers. Pick them and download the dashboard. Free.",
+  "lead": "Not sure which KPIs to track? Upload your data and DocBrisk suggests them, with the formula for each.",
+  "body": [
+   "Choosing KPIs is the hard part of any dashboard. DocBrisk reads each column's name and values to work out what it means: money, quantities, dates, regions, products, people or statuses. From that it proposes headline numbers, trends, breakdowns and rankings, and derived KPIs such as profit, profit margin, target achievement and completion rate.",
+   "Every suggestion shows how it is calculated, and you tick only the ones you want. The dashboard is rebuilt instantly as you choose."
+  ],
+  "f": [
+   [
+    "What is a KPI dashboard?",
+    "A one-page view of the few numbers that show how a business or team is doing, such as revenue, growth, margin and target achievement, with charts that explain them."
+   ],
+   [
+    "How are the KPIs chosen?",
+    "From the column names and the data: amounts become totals and averages, a date adds growth and trends, categories add breakdowns, and pairs such as revenue and cost add profit and margin."
+   ],
+   [
+    "Can I change a column's meaning?",
+    "Yes. Each column shows how it was read (date, number, category, name, ID); change any that are wrong and the suggestions update."
+   ]
+  ],
+  "kw": [
+   "kpi dashboard generator",
+   "kpi dashboard",
+   "kpi dashboard in excel",
+   "kpi dashboard template",
+   "kpi report maker",
+   "business kpi dashboard"
+  ],
+  "rel": [
+   "sales-dashboard-excel",
+   "mis-report-dashboard"
+  ]
+ },
+ "mis-report-dashboard": {
+  "tool": "excel-dashboard",
+  "h1": "MIS Report Dashboard from Excel",
+  "t": "MIS Report Dashboard: Turn Excel MIS into Charts and KPIs | DocBrisk",
+  "d": "Make a monthly MIS report dashboard from your Excel data in minutes: KPIs with month-on-month change, trends, breakdowns and written insights. Download as PDF or a live Excel workbook.",
+  "lead": "Upload the month's MIS data and get a management-ready dashboard with month-on-month change and written insights.",
+  "body": [
+   "A monthly MIS report usually takes hours of pivot tables and copy-pasted charts. Upload the raw data instead: DocBrisk builds the KPI cards with change against last month, the trend charts and the breakdowns by branch, product or department, and writes the key insights in plain English.",
+   "Send the PDF to management, keep the Excel workbook as next month's template, or share the HTML dashboard that anyone can open and filter."
+  ],
+  "f": [
+   [
+    "What is an MIS dashboard?",
+    "A management information system report in visual form: the period's key numbers, how they changed, and where they came from."
+   ],
+   [
+    "Can I make the MIS report every month?",
+    "Yes. Keep the downloaded Excel dashboard, paste next month's rows into its Data sheet and recalculate, or upload the new file here."
+   ],
+   [
+    "Are the insights written automatically?",
+    "Yes: growth against the previous period, the best period, the biggest contributors and how concentrated the results are."
+   ]
+  ],
+  "kw": [
+   "mis report in excel",
+   "mis report dashboard",
+   "mis report format",
+   "monthly mis report",
+   "mis dashboard",
+   "management report dashboard"
+  ],
+  "rel": [
+   "sales-dashboard-excel",
+   "kpi-dashboard-generator"
+  ]
+ },
+ "power-bi-dashboard-from-excel": {
+  "tool": "excel-dashboard",
+  "h1": "Power BI Dashboard from Excel: Free Starter Kit",
+  "t": "Power BI Dashboard from Excel: Free Kit with DAX Measures & Theme | DocBrisk",
+  "d": "Upload Excel and get a Power BI starter kit: clean data, ready DAX measures, a date table, a matching theme file and a step-by-step visual build guide. Looker Studio kit too.",
+  "lead": "Upload your Excel file, pick the KPIs, and download the Power BI kit: data, DAX measures, theme and build guide.",
+  "body": [
+   "Building a Power BI report from a spreadsheet means cleaning the data, writing DAX measures, creating a date table and choosing a layout. The kit does that groundwork: data.csv with clean headers and proper dates, measures.dax with a measure for every KPI (and month-on-month growth), a date table formula, a theme.json in your chosen colours, and a guide listing each visual and its fields.",
+   "The same file also exports a Looker Studio kit with calculated fields, and an HTML dashboard that shows the finished layout before you build it."
+  ],
+  "f": [
+   [
+    "Does it create a .pbix file?",
+    "No: a .pbix can only be saved by Power BI Desktop. The kit gives you everything to build it in about 15 minutes: data, measures, theme and a step-by-step guide."
+   ],
+   [
+    "Which DAX measures are included?",
+    "A measure for every KPI you picked: SUM, AVERAGE, COUNTROWS, DISTINCTCOUNT, DIVIDE-based margins and achievement, plus month-on-month change using a date table."
+   ],
+   [
+    "Is there a Looker Studio version?",
+    "Yes. The Looker Studio kit has the clean data, calculated-field formulas and a build guide."
+   ]
+  ],
+  "kw": [
+   "power bi dashboard from excel",
+   "excel to power bi",
+   "power bi dashboard template",
+   "dax measures for sales",
+   "looker studio dashboard from excel",
+   "power bi starter kit"
+  ],
+  "rel": [
+   "kpi-dashboard-generator",
+   "excel-to-html-dashboard"
+  ]
+ },
+ "excel-to-html-dashboard": {
+  "tool": "excel-dashboard",
+  "h1": "Interactive HTML Dashboard from Excel",
+  "t": "Excel to HTML Dashboard: Interactive Charts in One File | DocBrisk",
+  "d": "Convert an Excel sheet into an interactive HTML, CSS and JavaScript dashboard with filters and charts in a single file that works offline. Free, no coding.",
+  "lead": "Upload Excel and download a single HTML file: an interactive dashboard with filters that opens in any browser.",
+  "body": [
+   "The HTML dashboard is one self-contained file: your data, the charts and the filters are all inside it. Open it on a laptop or phone, email it, or put it on any web host or intranet. It needs no internet connection, no login and no Power BI licence.",
+   "Charts are crisp SVG, the layout adapts to small screens, and the filters for region, product or month recalculate every card and chart instantly."
+  ],
+  "f": [
+   [
+    "Do I need to know coding?",
+    "No. Pick the KPIs and a theme; the HTML, CSS and JavaScript are written for you."
+   ],
+   [
+    "Can I host it on my website?",
+    "Yes. Upload the single .html file to any web host, Google Drive or an intranet."
+   ],
+   [
+    "Does it work offline?",
+    "Yes. Everything, including the data, is inside the file."
+   ]
+  ],
+  "kw": [
+   "excel to html dashboard",
+   "html dashboard from excel",
+   "interactive dashboard html",
+   "javascript dashboard from excel",
+   "dashboard in html css js",
+   "offline dashboard"
+  ],
+  "rel": [
+   "power-bi-dashboard-from-excel",
+   "sales-dashboard-excel"
+  ]
+ }
+});
 // A search owned by a landing page is not claimed by its tool page as well.
 for (const L of Object.values(LANDINGS)) {
   if (KW[L.tool]) KW[L.tool] = KW[L.tool].filter((q) => L.kw.indexOf(q) === -1);
 }
 // Short URLs that match a tool exactly go to the tool, so one page ranks.
-const REDIRECTS = { '/income-tax-calculator': '/tool/income-tax-calculator', '/emi-calculator': '/tool/emi-calculator', '/sip-calculator': '/tool/sip-calculator', '/fd-calculator': '/tool/fd-calculator', '/jpg-to-pdf': '/tool/image-to-pdf', '/pdf-to-jpg': '/tool/pdf-to-image', '/passport-size-photo-maker': '/tool/photo-studio' };
+const REDIRECTS = { '/excel-dashboard': '/tool/excel-dashboard', '/dashboard-maker': '/tool/excel-dashboard', '/income-tax-calculator': '/tool/income-tax-calculator', '/emi-calculator': '/tool/emi-calculator', '/sip-calculator': '/tool/sip-calculator', '/fd-calculator': '/tool/fd-calculator', '/jpg-to-pdf': '/tool/image-to-pdf', '/pdf-to-jpg': '/tool/pdf-to-image', '/passport-size-photo-maker': '/tool/photo-studio' };
 
 const EXAM_CHECKED = 'September 2026';
 const EXAMS = {
@@ -5042,7 +5278,7 @@ function examSchema(slug) {
       'acceptedAnswer': { '@type': 'Answer', 'text': f[1] } })) }]);
 }
 
-const GROUPS = [["income-tax-calculator","emi-calculator","sip-calculator","fd-calculator","salary-slip","rent-receipt","gst-calculator"], ["biodata-maker", "letter-maker", "cv-studio", "salary-slip", "rent-receipt", "invoice-maker", "id-card"], ["gst-calculator", "gstin-validator", "invoice-maker", "amount-in-words", "pan-aadhaar-validator", "salary-slip", "rent-receipt"], ["age-calculator", "cgpa-calculator", "exam-photo", "image-compressor", "cv-studio", "letter-maker"], ["photo-studio", "exam-photo", "image-compressor", "doc-scanner", "id-card", "cv-studio", "ocr-pdf", "image-to-pdf"], ["pdf-editor", "sign-pdf", "redact-pdf", "smart-redact", "clean-metadata", "unlock-pdf", "protect-pdf", "watermark-pdf", "remove-watermark", "number-pdf", "doc-integrity"], ["merge-pdf", "split-by-size", "organize-pdf", "compress-pdf", "resize-pdf", "impose-pdf", "clean-scan", "batch-process", "compare-pdf"], ["pdf-to-word", "word-to-pdf", "pdf-to-excel", "extract-tables", "sheet-to-pdf", "pdf-to-image", "image-to-pdf", "pdf-to-ppt", "extract-images", "translate-pdf", "ocr-pdf"], ["qr-maker", "qr-stamp", "invoice-maker", "mail-merge", "sheet-to-pdf"]];
+const GROUPS = [["excel-dashboard", "sheet-to-pdf", "extract-tables", "pdf-to-excel", "mail-merge", "invoice-maker"], ["income-tax-calculator","emi-calculator","sip-calculator","fd-calculator","salary-slip","rent-receipt","gst-calculator"], ["biodata-maker", "letter-maker", "cv-studio", "salary-slip", "rent-receipt", "invoice-maker", "id-card"], ["gst-calculator", "gstin-validator", "invoice-maker", "amount-in-words", "pan-aadhaar-validator", "salary-slip", "rent-receipt"], ["age-calculator", "cgpa-calculator", "exam-photo", "image-compressor", "cv-studio", "letter-maker"], ["photo-studio", "exam-photo", "image-compressor", "doc-scanner", "id-card", "cv-studio", "ocr-pdf", "image-to-pdf"], ["pdf-editor", "sign-pdf", "redact-pdf", "smart-redact", "clean-metadata", "unlock-pdf", "protect-pdf", "watermark-pdf", "remove-watermark", "number-pdf", "doc-integrity"], ["merge-pdf", "split-by-size", "organize-pdf", "compress-pdf", "resize-pdf", "impose-pdf", "clean-scan", "batch-process", "compare-pdf"], ["pdf-to-word", "word-to-pdf", "pdf-to-excel", "extract-tables", "sheet-to-pdf", "pdf-to-image", "image-to-pdf", "pdf-to-ppt", "extract-images", "translate-pdf", "ocr-pdf"], ["qr-maker", "qr-stamp", "invoice-maker", "mail-merge", "sheet-to-pdf"]];
 
 const FREE_COUNT = Object.values(TOOLS).filter((t) => !t.pro).length;
 const PRO_COUNT = Object.keys(TOOLS).length - FREE_COUNT;
