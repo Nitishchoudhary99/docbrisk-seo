@@ -13,7 +13,10 @@ await wait(4500); [s, j] = await ai(K.free.key); check('free key second', s === 
 await wait(4500); [s, j] = await ai(K.free.key); check('free key over the limit, with the Pro offer', s === 429 && j.code === 'limit' && /Pro you get 100/.test(j.error), [s, j.error]);
 [s, j] = await ai(K.expired.key); check('expired Pro key refused', s === 402 && j.code === 'expired', [s, j.error]);
 [s, j] = await ai('DBK1-AAAAA-BBBBB'); check('not a key refused', s === 401 && j.code === 'no_key', [s, j.code]);
-let bad = K.pro.key.slice(0, -3) + (K.pro.key.endsWith('Z') ? 'Y' : 'Z') + K.pro.key.slice(-2); [s, j] = await ai(bad); check('changed key refused', s === 401, [s, j.code]);
+// change one character inside the signature (not a dash, not the padding at the end)
+const B32 = '0123456789ABCDEFGHJKMNPQRSTVWXYZ'; let pos = K.pro.key.length - 30; while (K.pro.key[pos] === '-') pos++;
+const swap = B32[(B32.indexOf(K.pro.key[pos]) + 7) % 32];
+let bad = K.pro.key.slice(0, pos) + swap + K.pro.key.slice(pos + 1); [s, j] = await ai(bad); check('changed key refused', s === 401, [s, j.code]);
 [s, j] = await post('ai/block', { id: K.blocked.id }); check('block needs the admin key', s === 401, [s]);
 [s, j] = await post('ai/block', { id: K.blocked.id }, { Authorization: 'Bearer admin-key-for-local-test-only-1234' }); check('admin blocks a key', s === 200 && j.blocked, [s, j]);
 await wait(500); [s, j] = await ai(K.blocked.key); check('blocked key refused', s === 403 && j.code === 'blocked', [s, j.code]);

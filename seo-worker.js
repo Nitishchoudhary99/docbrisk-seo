@@ -7716,7 +7716,8 @@ async function addinsApi(request, env, ctx, url) {
    Admin: GET  /addins-api/ai/usage?date=YYYY-MM-DD   uses per key that day
           POST /addins-api/ai/block  { id, block }    stop / allow AI for one key id (refunds, abuse)
    Stored: _aiuse/<date>/<key id>  { n }   and   _aiblock/<key id>
-   Workers KV free plan allows 1,000 writes a day; each AI request writes once.
+   Workers KV free plan allows 1,000 writes a day; each AI request writes once (twice when Claude fails).
+   When writes are refused the proxy stops answering for the day, so limits always hold (Workers Paid: 1M writes).
    ===================================================================== */
 const AI_MODEL = 'claude-opus-5-5';
 const AI_MAX_REQUEST = 600, AI_MAX_CONTEXT = 5000;
@@ -7786,6 +7787,11 @@ async function aiFormula(request, env, ctx, url, store) {
       code: 'limit', left: 0, limit, tier: lic.tier }, 429);
   }
 
+  // reserve the use first: if the counter cannot be saved (for example the KV daily write quota is used up),
+  // refuse instead of answering without a limit
+  try { await store.putRecord(useKey, { n: used + 1 }, { n: used + 1, t: lic.tier[0] }); }
+  catch (e) { return jsonRes({ error: 'AI Formula is resting for today. Please try again tomorrow.', code: 'quota' }, 503); }
+
   let msg;
   try {
     const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, baseURL: env.ANTHROPIC_BASE_URL || undefined, maxRetries: 1, timeout: 60000 });
@@ -7801,10 +7807,10 @@ async function aiFormula(request, env, ctx, url, store) {
     });
   } catch (e) {
     const st = e && e.status;
+    // give the use back: the user got no answer
+    ctx.waitUntil(store.putRecord(useKey, { n: used }, { n: used, t: lic.tier[0] }).catch(() => {}));
     return jsonRes({ error: st === 429 || st === 529 ? 'AI is busy just now. Try again in a minute.' : 'AI could not answer just now. Try again in a minute.', code: 'upstream' }, 502);
   }
-  // count only answered requests
-  ctx.waitUntil(store.putRecord(useKey, { n: used + 1 }, { n: used + 1, t: lic.tier[0] }).catch(() => {}));
   if (msg.stop_reason === 'refusal') return jsonRes({ ok: true, formula: null, why: 'This request was declined. Describe the calculation differently.', left: limit - used - 1, limit, tier: lic.tier });
   const text = (msg.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('');
   const r = aiParse(text);
