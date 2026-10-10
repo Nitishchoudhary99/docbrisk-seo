@@ -71,7 +71,7 @@ const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
 const LASTMOD = '2026-10-10';          // bump when page content changes
-const BUILD = '2026-10-10c';              // bump on every deploy of this Worker
+const BUILD = '2026-10-10d';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
@@ -1303,8 +1303,8 @@ Object.assign(TOOLS, {
 Object.assign(TOOLS, {
  "excel-dashboard": {
   "t": "Excel Dashboard Maker",
-  "d": "Upload an Excel or CSV file and get suggested KPIs and charts, then a ready dashboard: live Excel, HTML, PDF, PNG, or a Power BI / Looker Studio kit.",
-  "l": "Upload any spreadsheet with a header row: sales, invoices, expenses, HR, inventory, leads or marks. DocBrisk reads every column, works out what it means (dates, amounts, quantities, regions, products, people, statuses) and suggests KPIs and charts: totals and averages, growth against the previous month, profit and margin when revenue and cost are present, target achievement, completion rates, monthly trends, breakdowns by region or channel, and top-10 rankings. Tick what you want, or type a question in plain English (for example: top 5 products by profit in 2026, region wise units, monthly revenue trend for South) and the chart appears. Click any bar, slice or point to filter the whole dashboard; change any chart's type, size and order. A data health check flags blanks, duplicates, typos and unusual values, trend charts show a three-period projection, and the insights call out growth, year-on-year change, unusual months and 80/20 concentration. Pick the currency and Indian or international number style, save the design, and next month's file gets the same dashboard automatically. Download it as a PowerPoint with editable charts too. The Excel dashboard uses live formulas and native charts over a Data sheet, so it updates when you paste new data. The HTML dashboard is one file with working filters. The Power BI kit has clean data, DAX measures, a date table, a theme and a build guide; the Looker Studio kit has calculated fields and a guide. Everything runs in your browser.",
+  "d": "Upload Excel or CSV: auto KPIs, build-your-own charts, formula columns, heatmaps and Pareto. Get live Excel, PowerPoint, HTML, PDF or a Power BI kit.",
+  "l": "Upload any spreadsheet with a header row: sales, invoices, expenses, HR, inventory, leads or marks. DocBrisk reads every column, works out what it means (dates, amounts, quantities, regions, products, people, statuses) and suggests KPIs and charts: totals and averages, growth against the previous month, profit and margin when revenue and cost are present, target achievement, completion rates, monthly trends, breakdowns by region or channel, and top-10 rankings. Tick what you want, or type a question in plain English (for example: top 5 products by profit in 2026, region wise units, monthly revenue trend for South) and the chart appears. Click any bar, slice or point to filter the whole dashboard; change any chart's type, size and order. A data health check flags blanks, duplicates, typos and unusual values, trend charts show a three-period projection, and the insights call out growth, year-on-year change, unusual months and 80/20 concentration. Pick the currency and Indian or international number style, save the design, and next month's file gets the same dashboard automatically. Download it as a PowerPoint with editable charts too. Build your own KPIs and charts field by field (total, average, median, lowest, highest, unique count, % of rows, A minus B, A ÷ B, margin) with filters and date ranges, add Excel-style formula columns such as [Revenue] - [Cost] or IF([Status] = \"Paid\", [Amount], 0), and use heatmaps and 80/20 Pareto charts. The Excel dashboard uses live formulas and native charts over a Data sheet, so it updates when you paste new data. The HTML dashboard is one file with working filters. The Power BI kit has clean data, DAX measures, a date table, a theme and a build guide; the Looker Studio kit has calculated fields and a guide. Everything runs in your browser.",
   "steps": [
    "Upload the Excel or CSV file, or try the sample sales data.",
    "Check how each column was read, then tick the suggested KPIs and charts.",
@@ -1314,7 +1314,19 @@ Object.assign(TOOLS, {
   "faq": [
    [
     "My Excel is not a simple table. Will it work?",
-    "Yes. Title rows, merged or two-row headers, months or quarters across the columns, P&L statements, pivot-table exports with subtotals, bank statements, values in lakhs or crores and one sheet per month are all recognised and reshaped automatically, and the page lists what was changed."
+    "Yes. Title rows, merged or three-row headers, months, quarters or dates across the columns, section headings (North Region, South Region), Tally and trial balance exports with group and total rows, attendance registers with P/A/L codes, Google Forms surveys (with NPS), GST registers, headers repeated after page breaks, P&L statements, pivot-table exports, bank statements, values in lakhs or crores and one sheet per month are all recognised and reshaped by rules, and the page lists what was changed."
+   ],
+   [
+    "Can I make my own KPI or chart?",
+    "Yes. In Build your own, pick the calculation (total, average, median, lowest, highest, count, unique count, % of rows with a value, A minus B, A ÷ B, A as % of B or margin), split it by any column or over time, add filters and a date range, and show it as a KPI card, line, column, bar, donut, stacked, heatmap, Pareto (80/20) or table. A live preview shows the exact result before you add it."
+   ],
+   [
+    "Can I add formula columns like in Excel?",
+    "Yes. Add a calculated column such as [Revenue] - [Cost], [Profit] / [Revenue] * 100, IF([Status] = \"Paid\", [Amount], 0) or DAYS([Delivered], [Ordered]). Typos are caught with a suggestion, the column works in every chart and download, and a saved design re-creates it on next month's file."
+   ],
+   [
+    "Does it use AI?",
+    "No. Every column, KPI and answer is worked out by exact rules in your browser, so the same file always gives the same numbers and nothing is sent anywhere."
    ],
    [
     "Which files work?",
@@ -1521,6 +1533,8 @@ Object.assign(KW, {
 /* ---------- v5.0: target searches for the dashboard maker ---------- */
 Object.assign(KW, {
  "excel-dashboard": [
+  "pareto chart from excel",
+  "heatmap from excel",
   "excel dashboard maker",
   "dashboard from excel",
   "kpi dashboard generator",
