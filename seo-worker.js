@@ -70,8 +70,8 @@ const REPO_RAW = 'https://raw.githubusercontent.com/Nitishchoudhary99/My-website
 const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
-const LASTMOD = '2026-10-07';          // bump when page content changes
-const BUILD = '2026-10-07a';              // bump on every deploy of this Worker
+const LASTMOD = '2026-10-10';          // bump when page content changes
+const BUILD = '2026-10-10a';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
@@ -1151,6 +1151,154 @@ TOOLS['biodata-maker'].faq.push(['Can I make a biodata in Marathi or Gujarati?',
 TOOLS['letter-maker'].l += ' More formats are included: applications to a bank manager in English and Hindi, TC, bonafide and fee-concession applications, relieving, offer, appointment, joining and salary letters, an internship certificate, an authorisation letter and a self-declaration.';
 TOOLS['letter-maker'].faq.push(['Which letter formats are included?', 'Leave applications in English and Hindi, bank applications in English and Hindi, TC and bonafide applications, a fee-concession application in Hindi, a lost-article report, resignation, relieving, offer, appointment, joining, experience, salary and internship letters, NOC, authorisation letter, self-declaration and an 11-month rent agreement.']);
 
+/* ---------- v4.7: loan, investment and income tax calculators ---------- */
+Object.assign(TOOLS, {
+ "income-tax-calculator": {
+  "t": "Income Tax Calculator FY 2026-27 (New vs Old Regime)",
+  "d": "Compare income tax under the new and old regimes for FY 2026-27, with the ₹12 lakh rebate, standard deduction, 80C, HRA, 80D and home loan interest.",
+  "l": "Enter your salary and other income once and see your tax under both regimes side by side: standard deduction, taxable income, tax on each slab, the rebate, surcharge, cess, the total and the monthly figure. The new regime uses the slabs from 0% up to ₹4 lakh to 30% above ₹24 lakh, the ₹75,000 standard deduction and the rebate that makes income up to ₹12 lakh tax-free, with marginal relief just above it. For the old regime you can add HRA, 80C, 80D, home loan interest, NPS and professional tax, each capped at its limit, and the calculator tells you how large your deductions would need to be for the old regime to break even.",
+  "steps": [
+   "Choose your age group and enter your gross salary and any other income.",
+   "If you are thinking of the old regime, open its deductions and add HRA, 80C, 80D and home loan interest.",
+   "Compare the two totals, see how much the cheaper regime saves, and copy the comparison."
+  ],
+  "use": "For salaried employees choosing a regime for TDS at the start of the year, and for anyone checking their tax before filing an ITR.",
+  "faq": [
+   [
+    "Is income up to ₹12 lakh tax-free?",
+    "Under the new regime, yes. Resident individuals with taxable income up to ₹12 lakh get a rebate of up to ₹60,000, which cancels the tax. Salaried people also get the ₹75,000 standard deduction, so a salary up to ₹12.75 lakh pays nothing."
+   ],
+   [
+    "What are the new regime slabs for FY 2026-27?",
+    "Nil up to ₹4 lakh, 5% from ₹4 to 8 lakh, 10% from ₹8 to 12 lakh, 15% from ₹12 to 16 lakh, 20% from ₹16 to 20 lakh, 25% from ₹20 to 24 lakh and 30% above ₹24 lakh, plus 4% health and education cess. Budget 2026 left them unchanged."
+   ],
+   [
+    "What are the old regime slabs?",
+    "Nil up to ₹2.5 lakh (₹3 lakh for 60 to 79, ₹5 lakh for 80 and above), 5% up to ₹5 lakh, 20% from ₹5 to 10 lakh and 30% above ₹10 lakh. Income up to ₹5 lakh is tax-free through the ₹12,500 rebate."
+   ],
+   [
+    "Which regime is better for me?",
+    "With only the standard deduction, the new regime is cheaper at every income. The old regime can come out ahead only when you claim large deductions such as HRA, 80C, 80D and home loan interest. The calculator shows exactly how large they would need to be."
+   ],
+   [
+    "What is marginal relief at ₹12 lakh?",
+    "If your taxable income is a little over ₹12 lakh, the tax cannot be more than the income above ₹12 lakh. At ₹12.25 lakh of taxable income the tax is ₹25,000 plus cess, not the ₹63,750 the slabs would give."
+   ]
+  ],
+  "st": "Income Tax Calculator FY 2026-27: New vs Old Regime",
+  "calc": true,
+  "fin": true
+ },
+ "emi-calculator": {
+  "t": "EMI Calculator for Home, Car & Personal Loans",
+  "d": "Calculate the EMI, total interest and amortisation schedule of any loan, and see how much interest a part payment or a higher monthly payment saves.",
+  "l": "Enter the loan amount, the interest rate and the tenure in years or months to get the EMI, the total interest and the total amount payable, with a chart of principal against interest. The amortisation schedule shows each year or each month, with the principal and interest inside every EMI and the balance left, and you can save it as a CSV for Excel. Add an extra amount every month or a one-time part payment to see how many months sooner the loan ends and how much interest you save. Quick settings for home, car, personal and education loans fill in typical amounts and rates.",
+  "steps": [
+   "Pick the loan type, or simply enter the loan amount, interest rate and tenure.",
+   "Read the EMI, the total interest and the year-wise or month-wise schedule.",
+   "Add a prepayment to see the interest and months saved, and download the schedule if you need it."
+  ],
+  "use": "For comparing loan offers, planning a home, car or personal loan, and deciding whether to prepay.",
+  "faq": [
+   [
+    "What is the formula for EMI?",
+    "EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1). P is the loan amount, r is the annual rate divided by 12 and by 100, and n is the tenure in months."
+   ],
+   [
+    "What is the EMI on a ₹30 lakh home loan?",
+    "At 8.5% for 20 years it is ₹26,035 a month, and the total interest over the loan is about ₹32.5 lakh. At 15 years the EMI rises to about ₹29,540 but the interest falls sharply."
+   ],
+   [
+    "What is the EMI on a ₹5 lakh personal loan?",
+    "At 12% for 3 years it is ₹16,607 a month, with ₹97,858 of interest in all."
+   ],
+   [
+    "Is it better to reduce the EMI or the tenure after a prepayment?",
+    "Reducing the tenure saves more interest, because the balance is cleared sooner. This calculator keeps the EMI fixed and shows the shorter tenure."
+   ],
+   [
+    "Why does my bank show a slightly different EMI?",
+    "Banks may round the rate or the EMI, and the first EMI can include broken-period interest from the day the loan is paid out. The difference is usually a few rupees."
+   ]
+  ],
+  "st": "EMI Calculator: Home, Car & Personal Loan EMI",
+  "calc": true,
+  "fin": true
+ },
+ "sip-calculator": {
+  "t": "SIP Calculator: Mutual Fund SIP & Lumpsum Returns",
+  "d": "Estimate what a monthly SIP, a lumpsum or a step-up SIP could grow to, or find the SIP you need for a goal such as ₹1 crore, with a year-by-year table.",
+  "l": "Four calculators in one. The SIP tab shows what a fixed monthly investment could grow to at the return you expect. The lumpsum tab does the same for a single investment. The step-up SIP tab raises the SIP by a percentage every year, the way most people invest as their salary grows, and shows how much more it builds than a flat SIP. The goal planner works backwards from a target, such as ₹1 crore for retirement or a child's education, to the monthly SIP or the one-time amount you would need. Each result has a chart and a year-by-year table, and can be shown in today's money for any inflation rate you choose.",
+  "steps": [
+   "Choose SIP, lumpsum, step-up SIP or the goal planner.",
+   "Enter the amount or target, the return you expect each year and the number of years.",
+   "Read the amount invested, the estimated returns and the year-by-year growth."
+  ],
+  "use": "For planning mutual fund investments, comparing a SIP with a lumpsum, and setting a monthly figure for a goal.",
+  "faq": [
+   [
+    "How is the SIP maturity amount calculated?",
+    "FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), where P is the monthly SIP, i is the expected annual return divided by 12 and by 100, and n is the number of months. This assumes you invest at the start of every month."
+   ],
+   [
+    "What will ₹10,000 a month in SIP give in 20 years?",
+    "At an assumed 12% a year, about ₹1 crore (₹99.9 lakh) on ₹24 lakh invested."
+   ],
+   [
+    "How much SIP do I need for ₹1 crore?",
+    "At 12% a year, about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years."
+   ],
+   [
+    "Are SIP returns guaranteed?",
+    "No. Mutual fund returns depend on the market and change from year to year. The rate you enter is an assumption, so it is sensible to check a lower one too."
+   ],
+   [
+    "How are mutual fund gains taxed?",
+    "For equity funds, gains on units held over a year are long-term and taxed at 12.5% above ₹1.25 lakh a year; gains within a year are taxed at 20%. Debt fund gains are added to your income."
+   ]
+  ],
+  "st": "SIP Calculator: Mutual Fund SIP & Lumpsum Returns",
+  "calc": true,
+  "fin": true
+ },
+ "fd-calculator": {
+  "t": "FD, RD & PPF Calculator",
+  "d": "Calculate the maturity amount and interest of a fixed deposit, a recurring deposit or a PPF account, with quarterly, monthly or yearly compounding.",
+  "l": "Three deposit calculators in one. For a fixed deposit, enter the amount, rate and period in years and months, and choose quarterly, monthly, half-yearly or yearly compounding, or simple interest if you take the interest out as it is paid. For a recurring deposit, enter the monthly instalment, rate and number of months; each instalment is compounded quarterly for the time it stays in the account, which is how banks calculate RD maturity. For PPF, enter your yearly deposit and see the balance after 15 years, or after extending in 5-year blocks, with a table of the interest added each year.",
+  "steps": [
+   "Choose FD, RD or PPF.",
+   "Enter the amount, the interest rate and the period, and for an FD the compounding.",
+   "Read the maturity value and the interest earned, and copy the result."
+  ],
+  "use": "For comparing bank FD rates, planning a monthly RD, and seeing what a PPF account will be worth at maturity.",
+  "faq": [
+   [
+    "How is FD maturity calculated?",
+    "With quarterly compounding, maturity = P × (1 + r ÷ 400)^(4 × years). ₹5 lakh at 7.25% for 3 years matures at about ₹6.2 lakh."
+   ],
+   [
+    "How is RD interest calculated?",
+    "Every monthly instalment earns interest compounded each quarter for the months it is in the account. ₹2,000 a month for 5 years at 7% matures at about ₹1.44 lakh."
+   ],
+   [
+    "What is the PPF interest rate now?",
+    "The government set it at 7.1% a year for October to December 2026. It is reviewed every quarter, and the calculator lets you change it."
+   ],
+   [
+    "What will ₹1.5 lakh a year in PPF give?",
+    "At 7.1%, about ₹40.68 lakh after 15 years, ₹66.6 lakh after 20 years and ₹1.03 crore after 25 years. PPF interest and maturity are tax-free."
+   ],
+   [
+    "Is TDS deducted on FD interest?",
+    "Banks deduct TDS when the interest from one bank is more than ₹50,000 in a year, or ₹1,00,000 for senior citizens, unless you submit Form 15G or 15H."
+   ]
+  ],
+  "st": "FD Calculator, RD & PPF Calculator: Maturity Amount",
+  "calc": true,
+  "fin": true
+ }
+});
+
 /* ---------- target searches (v4.3) ----------
    The phrases people type for each tool. Used in three places: a short
    visible "Also searched as" line on the tool page, <meta name="keywords">,
@@ -1281,6 +1429,46 @@ Object.assign(KW, {
   "percentage to cgpa",
   "marks percentage calculator",
   "cgpa calculator"
+ ]
+});
+
+/* ---------- v4.7: target searches for the money calculators ---------- */
+Object.assign(KW, {
+ "income-tax-calculator": [
+  "income tax calculator",
+  "income tax calculator fy 2026-27",
+  "new vs old tax regime calculator",
+  "tax calculator new regime",
+  "salary tax calculator",
+  "income tax slab 2026-27",
+  "old regime vs new regime"
+ ],
+ "emi-calculator": [
+  "emi calculator",
+  "home loan emi calculator",
+  "loan emi calculator",
+  "car loan emi calculator",
+  "personal loan emi calculator",
+  "emi calculator with prepayment",
+  "loan amortization schedule"
+ ],
+ "sip-calculator": [
+  "sip calculator",
+  "mutual fund sip calculator",
+  "lumpsum calculator",
+  "step up sip calculator",
+  "sip return calculator",
+  "sip calculator for 1 crore",
+  "mutual fund returns calculator"
+ ],
+ "fd-calculator": [
+  "fd calculator",
+  "fixed deposit calculator",
+  "rd calculator",
+  "ppf calculator",
+  "fd interest calculator",
+  "recurring deposit calculator",
+  "fd maturity calculator"
  ]
 });
 
@@ -4261,12 +4449,457 @@ Object.assign(LANDINGS, {
   ]
  }
 });
+/* ---------- v4.7: loan, SIP, deposit and tax landing pages ---------- */
+Object.assign(LANDINGS, {
+ "home-loan-emi-calculator": {
+  "tool": "emi-calculator",
+  "h1": "Home Loan EMI Calculator",
+  "t": "Home Loan EMI Calculator with Prepayment & Schedule | DocBrisk",
+  "d": "Calculate your home loan EMI, total interest and year-wise amortisation schedule. Add part payments to see the interest and years you save. Free.",
+  "lead": "Set to a home loan already. Enter your loan amount, rate and tenure.",
+  "body": [
+   "A home loan EMI is worked out on the reducing balance: each month's interest is charged only on what you still owe. A ₹30 lakh loan at 8.5% for 20 years has an EMI of ₹26,035, and you pay about ₹32.5 lakh in interest over the loan, more than the amount borrowed.",
+   "The tenure changes the cost far more than the EMI suggests. The same ₹30 lakh over 15 years costs ₹29,542 a month but about ₹23.2 lakh in interest, roughly ₹9 lakh less. Prepaying even one extra EMI a year has a similar effect."
+  ],
+  "f": [
+   [
+    "What is the EMI for a ₹50 lakh home loan?",
+    "At 8.5% for 20 years it is ₹43,391 a month. At 9% it rises to about ₹44,986."
+   ],
+   [
+    "How can I reduce my home loan interest?",
+    "Choose a shorter tenure, prepay whenever you can, especially in the first few years, and ask your bank to move you to its current lower rate if your loan is on an older benchmark."
+   ],
+   [
+    "Can I claim tax benefits on a home loan?",
+    "In the old regime, up to ₹2 lakh of interest on a self-occupied house and up to ₹1.5 lakh of principal under 80C. The new regime does not allow these for a self-occupied house."
+   ]
+  ],
+  "kw": [
+   "home loan emi calculator",
+   "housing loan emi calculator",
+   "home loan calculator",
+   "home loan interest calculator",
+   "sbi home loan emi calculator",
+   "home loan emi calculator with prepayment"
+  ],
+  "rel": [
+   "home-loan-prepayment-calculator",
+   "car-loan-emi-calculator",
+   "personal-loan-emi-calculator"
+  ]
+ },
+ "car-loan-emi-calculator": {
+  "tool": "emi-calculator",
+  "h1": "Car Loan EMI Calculator",
+  "t": "Car Loan EMI Calculator: Monthly EMI & Interest | DocBrisk",
+  "d": "Work out the EMI on a new or used car loan, the total interest and the schedule. Compare 3, 5 and 7 year tenures in seconds. Free and private.",
+  "lead": "Set to a car loan already. Enter the loan amount, rate and tenure.",
+  "body": [
+   "Car loans usually run for 1 to 7 years. On an ₹8 lakh loan at 9.5%, the EMI is ₹16,801 for 5 years, with about ₹2.08 lakh of interest in all.",
+   "Most banks lend up to 80 to 90% of the on-road price. A larger down payment lowers both the EMI and the interest, and a shorter tenure keeps the interest down even though the EMI is higher."
+  ],
+  "f": [
+   [
+    "What is the EMI on a ₹10 lakh car loan?",
+    "At 9.5% for 5 years it is about ₹21,000 a month. For 7 years it falls to about ₹16,340, but you pay much more interest."
+   ],
+   [
+    "Is a 7-year car loan a good idea?",
+    "It lowers the EMI, but the car loses value faster than the loan is repaid, and the total interest is much higher. Five years or less is usually wiser."
+   ],
+   [
+    "Can I prepay a car loan?",
+    "Usually yes, though fixed-rate car loans often carry a foreclosure charge of a few percent. Check your loan agreement, then add the prepayment above to see the saving."
+   ]
+  ],
+  "kw": [
+   "car loan emi calculator",
+   "car loan calculator",
+   "auto loan emi calculator",
+   "used car loan emi calculator",
+   "car emi calculator",
+   "vehicle loan emi calculator"
+  ],
+  "rel": [
+   "home-loan-emi-calculator",
+   "personal-loan-emi-calculator"
+  ]
+ },
+ "personal-loan-emi-calculator": {
+  "tool": "emi-calculator",
+  "h1": "Personal Loan EMI Calculator",
+  "t": "Personal Loan EMI Calculator: EMI, Interest & Schedule | DocBrisk",
+  "d": "Calculate the EMI and total interest on a personal loan for 1 to 5 years, with the month-wise schedule. Compare offers before you apply. Free.",
+  "lead": "Set to a personal loan already. Enter the amount, rate and tenure.",
+  "body": [
+   "Personal loans are unsecured, so their rates are higher, often 10.5% to 24% a year. On ₹5 lakh at 12% for 3 years the EMI is ₹16,607 and the interest about ₹97,900.",
+   "When you compare offers, look at the processing fee as well as the rate: a 2% fee on ₹5 lakh is ₹10,000 taken at the start. Keep the EMIs of all your loans under about 40 to 50% of your take-home pay."
+  ],
+  "f": [
+   [
+    "What is the EMI on a ₹2 lakh personal loan?",
+    "At 12% for 2 years it is about ₹9,415 a month; for 3 years about ₹6,643."
+   ],
+   [
+    "How do I get a lower personal loan rate?",
+    "A credit score above 750, a stable job with a large employer and an existing relationship with the bank usually bring the best offers."
+   ],
+   [
+    "Is it better to take a longer tenure?",
+    "Only if you need the lower EMI. A longer tenure means paying interest for longer, so the total cost rises."
+   ]
+  ],
+  "kw": [
+   "personal loan emi calculator",
+   "personal loan calculator",
+   "personal loan interest calculator",
+   "personal loan emi",
+   "emi calculator personal loan",
+   "instant loan emi calculator"
+  ],
+  "rel": [
+   "car-loan-emi-calculator",
+   "home-loan-emi-calculator"
+  ]
+ },
+ "home-loan-prepayment-calculator": {
+  "tool": "emi-calculator",
+  "h1": "Home Loan Prepayment Calculator",
+  "t": "Home Loan Prepayment Calculator: Interest Saved | DocBrisk",
+  "d": "See how much interest and how many EMIs a part payment or an extra monthly amount saves on your home loan, with the new schedule. Free and private.",
+  "lead": "A ₹5 lakh part payment after the first year is filled in. Change it to your own figures.",
+  "body": [
+   "A prepayment goes straight to the principal, so every later EMI carries less interest. On a ₹30 lakh loan at 8.5% for 20 years, paying ₹5 lakh after the twelfth EMI ends the loan 73 EMIs early and saves about ₹14.1 lakh of interest.",
+   "Small, regular amounts work too. Adding a twelfth of an EMI every month, which equals one extra EMI a year, cuts the same loan by about 41 EMIs and saves about ₹6.5 lakh. Keep the EMI the same and let the tenure fall; that saves the most."
+  ],
+  "f": [
+   [
+    "Should I reduce the EMI or the tenure after prepaying?",
+    "Reducing the tenure saves more interest. Reduce the EMI only if you need room in your monthly budget."
+   ],
+   [
+    "Is there a penalty for prepaying a home loan?",
+    "Not on a floating-rate home loan taken by an individual: RBI rules do not allow it. Fixed-rate loans may carry a charge."
+   ],
+   [
+    "When is the best time to prepay?",
+    "As early as possible. In the first years most of each EMI is interest, so money you prepay then saves the most."
+   ]
+  ],
+  "kw": [
+   "home loan prepayment calculator",
+   "loan prepayment calculator",
+   "part payment calculator",
+   "emi calculator with prepayment",
+   "home loan part payment calculator",
+   "prepayment of home loan benefits"
+  ],
+  "rel": [
+   "home-loan-emi-calculator"
+  ]
+ },
+ "lumpsum-calculator": {
+  "tool": "sip-calculator",
+  "h1": "Lumpsum Calculator",
+  "t": "Lumpsum Calculator: One-Time Mutual Fund Returns | DocBrisk",
+  "d": "Find out what a one-time mutual fund investment could grow to at the return you expect, with a year-by-year table and inflation. Free and private.",
+  "lead": "Set to lumpsum already. Enter the amount, the return and the years.",
+  "body": [
+   "A lumpsum grows by compounding once a year: FV = P × (1 + r ÷ 100)^years. ₹1 lakh at 12% for 10 years becomes about ₹3.1 lakh, and for 20 years about ₹9.6 lakh.",
+   "A lumpsum puts all your money in at one price. If markets are high, many investors spread it over a few months through an STP or SIP instead; switch to the SIP tab to compare."
+  ],
+  "f": [
+   [
+    "What will ₹5 lakh become in 10 years?",
+    "At an assumed 12% a year, about ₹15.5 lakh."
+   ],
+   [
+    "Is a lumpsum better than a SIP?",
+    "If the market rises steadily, a lumpsum earns more because all the money is invested for longer. A SIP spreads the risk of investing at a peak."
+   ],
+   [
+    "Are the returns guaranteed?",
+    "No. Mutual fund returns vary, and the rate you enter is only an assumption."
+   ]
+  ],
+  "kw": [
+   "lumpsum calculator",
+   "lump sum calculator",
+   "mutual fund lumpsum calculator",
+   "one time investment calculator",
+   "lumpsum return calculator",
+   "compound interest calculator"
+  ],
+  "rel": [
+   "step-up-sip-calculator",
+   "sip-for-1-crore"
+  ]
+ },
+ "step-up-sip-calculator": {
+  "tool": "sip-calculator",
+  "h1": "Step-up SIP Calculator",
+  "t": "Step-up SIP Calculator: Yearly Top-up SIP Returns | DocBrisk",
+  "d": "See how raising your SIP by a fixed percentage every year grows your wealth compared with a flat SIP, with a year-by-year table. Free.",
+  "lead": "Set to a ₹10,000 SIP raised 10% a year for 20 years. Change any figure.",
+  "body": [
+   "A step-up (or top-up) SIP raises the monthly amount by a set percentage once a year, usually to match a salary rise. ₹10,000 a month raised 10% every year for 20 years at 12% grows to about ₹1.99 crore, against ₹99.9 lakh for a flat ₹10,000 SIP.",
+   "Most fund houses let you set the step-up when you start the SIP, either as a percentage or a fixed rupee amount, so the increase happens without you having to remember."
+  ],
+  "f": [
+   [
+    "What step-up percentage should I choose?",
+    "Something you can keep up, often 5 to 10% a year, close to your expected pay rise."
+   ],
+   [
+    "Does a step-up SIP need a new mandate every year?",
+    "No. You choose the step-up once and the fund house raises the instalment each year on its own."
+   ],
+   [
+    "Can I find the step-up SIP for a goal?",
+    "Yes. Use the goal planner tab and enter a step-up percentage; it shows the starting SIP you need."
+   ]
+  ],
+  "kw": [
+   "step up sip calculator",
+   "top up sip calculator",
+   "sip with annual increase calculator",
+   "step up sip",
+   "increasing sip calculator",
+   "sip step up returns"
+  ],
+  "rel": [
+   "sip-for-1-crore",
+   "lumpsum-calculator"
+  ]
+ },
+ "sip-for-1-crore": {
+  "tool": "sip-calculator",
+  "h1": "How Much SIP for ₹1 Crore?",
+  "t": "SIP for 1 Crore: Monthly SIP Needed in 10, 15, 20 Years | DocBrisk",
+  "d": "Find the monthly SIP needed to reach ₹1 crore in 10, 15 or 20 years at the return you expect, with or without a yearly step-up. Free goal planner.",
+  "lead": "The goal planner is set to ₹1 crore in 20 years. Change the years and the return.",
+  "body": [
+   "At an assumed 12% a year, reaching ₹1 crore takes about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years. Time does most of the work: the 20-year plan invests only ₹24 lakh of your own money.",
+   "With a 10% step-up every year you can start lower, at roughly ₹5,000 a month for 20 years. Remember inflation too: at 6% a year, ₹1 crore in 20 years will buy about what ₹31 lakh buys today."
+  ],
+  "f": [
+   [
+    "How much SIP for 1 crore in 10 years?",
+    "About ₹43,000 a month at 12% a year."
+   ],
+   [
+    "How much SIP for 1 crore in 15 years?",
+    "About ₹19,800 a month at 12% a year."
+   ],
+   [
+    "How much SIP for 1 crore in 20 years?",
+    "About ₹10,000 a month at 12% a year."
+   ]
+  ],
+  "kw": [
+   "sip for 1 crore",
+   "how much sip for 1 crore",
+   "sip calculator 1 crore",
+   "1 crore in 10 years sip",
+   "1 crore in 15 years sip",
+   "goal sip calculator"
+  ],
+  "rel": [
+   "step-up-sip-calculator",
+   "lumpsum-calculator"
+  ]
+ },
+ "rd-calculator": {
+  "tool": "fd-calculator",
+  "h1": "RD Calculator (Recurring Deposit)",
+  "t": "RD Calculator: Recurring Deposit Maturity & Interest | DocBrisk",
+  "d": "Calculate the maturity amount and interest of a bank or Post Office recurring deposit with quarterly compounding. Any monthly amount and tenure. Free.",
+  "lead": "Set to a recurring deposit already. Enter the monthly amount, rate and months.",
+  "body": [
+   "In a recurring deposit you put in the same amount every month. Banks add interest every quarter, and each instalment earns it only for the months it is in the account. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100.",
+   "RD interest is taxed as income, and TDS applies when your total interest from the bank crosses ₹50,000 in a year (₹1 lakh for senior citizens)."
+  ],
+  "f": [
+   [
+    "What is the maturity of ₹2,000 a month for 5 years?",
+    "At 7% a year, about ₹1,43,900 on ₹1,20,000 deposited."
+   ],
+   [
+    "Is RD better than SIP?",
+    "An RD gives a fixed, guaranteed return. A SIP in an equity fund can earn more over long periods but its value moves with the market."
+   ],
+   [
+    "What happens if I miss an RD instalment?",
+    "Banks usually charge a small penalty for a late instalment, and several missed instalments can lead to the RD being closed early."
+   ]
+  ],
+  "kw": [
+   "rd calculator",
+   "recurring deposit calculator",
+   "rd interest calculator",
+   "post office rd calculator",
+   "sbi rd calculator",
+   "rd maturity calculator"
+  ],
+  "rel": [
+   "ppf-calculator"
+  ]
+ },
+ "ppf-calculator": {
+  "tool": "fd-calculator",
+  "h1": "PPF Calculator",
+  "t": "PPF Calculator 2026: Maturity at 7.1% for 15+ Years | DocBrisk",
+  "d": "Calculate your PPF maturity amount and tax-free interest at 7.1%, for 15 years or extended in 5-year blocks, with a year-by-year table. Free.",
+  "lead": "Set to PPF already. Enter your yearly deposit.",
+  "body": [
+   "The PPF rate is 7.1% for October to December 2026. Depositing ₹1.5 lakh every year for 15 years builds about ₹40.68 lakh: ₹22.5 lakh of your money and about ₹18.18 lakh of interest, all tax-free.",
+   "After 15 years you can extend the account in 5-year blocks, with or without new deposits. Keep depositing ₹1.5 lakh and it reaches about ₹66.6 lakh at 20 years and ₹1.03 crore at 25."
+  ],
+  "f": [
+   [
+    "What is the maximum PPF deposit?",
+    "₹1,50,000 in a financial year, in one go or in instalments. The minimum is ₹500."
+   ],
+   [
+    "When should I deposit in PPF?",
+    "Before the 5th of the month, and ideally before 5 April, so the deposit earns interest for the whole year."
+   ],
+   [
+    "Is PPF interest taxable?",
+    "No. PPF is tax-free at every stage: deposits qualify for 80C in the old regime, and the interest and maturity are exempt."
+   ]
+  ],
+  "kw": [
+   "ppf calculator",
+   "ppf interest calculator",
+   "ppf maturity calculator",
+   "public provident fund calculator",
+   "ppf calculator 2026",
+   "ppf return calculator"
+  ],
+  "rel": [
+   "rd-calculator"
+  ]
+ },
+ "tax-on-12-lakh-salary": {
+  "tool": "income-tax-calculator",
+  "h1": "Income Tax on ₹12 Lakh Salary",
+  "t": "Income Tax on 12 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk",
+  "d": "How much tax on a ₹12 lakh salary in FY 2026-27? Nil in the new regime thanks to the ₹12 lakh rebate. See the old regime figure and your own numbers.",
+  "lead": "Set to a ₹12 lakh salary. Add your own income and deductions.",
+  "body": [
+   "A ₹12 lakh salary pays no income tax in the new regime. After the ₹75,000 standard deduction, the taxable income is ₹11.25 lakh, and the rebate for taxable income up to ₹12 lakh cancels the ₹52,500 of slab tax. In fact any salary up to ₹12.75 lakh is tax-free.",
+   "In the old regime the same salary pays ₹1,63,800 with no deductions, or about ₹1,01,400 with ₹2.25 lakh of 80C, 80D and NPS. The new regime wins unless you have very large deductions."
+  ],
+  "f": [
+   [
+    "Is a 12 lakh salary tax-free?",
+    "Yes, in the new regime, for a resident individual whose only income is the salary."
+   ],
+   [
+    "What if I also have interest income?",
+    "It is added to your income. If the taxable total goes over ₹12 lakh, tax applies, with marginal relief so the tax never exceeds the amount above ₹12 lakh."
+   ],
+   [
+    "Will my employer still deduct TDS?",
+    "If you choose the new regime and your projected taxable income stays within ₹12 lakh, there should be no TDS on salary."
+   ]
+  ],
+  "kw": [
+   "income tax on 12 lakh salary",
+   "12 lakh salary tax",
+   "12 lakh income tax new regime",
+   "tax on 12.75 lakh salary",
+   "12 lakh tax free",
+   "12 lakh salary tax calculation"
+  ],
+  "rel": [
+   "tax-on-15-lakh-salary",
+   "tax-on-20-lakh-salary"
+  ]
+ },
+ "tax-on-15-lakh-salary": {
+  "tool": "income-tax-calculator",
+  "h1": "Income Tax on ₹15 Lakh Salary",
+  "t": "Income Tax on 15 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk",
+  "d": "Tax on a ₹15 lakh salary in FY 2026-27 is ₹97,500 in the new regime. Compare it with the old regime and your own deductions. Free calculator.",
+  "lead": "Set to a ₹15 lakh salary. Add your own income and deductions.",
+  "body": [
+   "On a ₹15 lakh salary the new regime tax is ₹97,500 including cess. The taxable income is ₹14.25 lakh after the ₹75,000 standard deduction: nil up to ₹4 lakh, ₹20,000 on the next ₹4 lakh, ₹40,000 on the next ₹4 lakh and ₹33,750 on the last ₹2.25 lakh, plus 4% cess.",
+   "In the old regime the same salary pays ₹2,57,400 with no deductions and about ₹1,87,200 with ₹2.25 lakh of deductions. You would need roughly ₹5.45 lakh of old-regime deductions for the two to break even."
+  ],
+  "f": [
+   [
+    "How much is the monthly tax on 15 lakh?",
+    "About ₹8,125 a month in the new regime."
+   ],
+   [
+    "Can HRA make the old regime better at 15 lakh?",
+    "Only if HRA, 80C, 80D, home loan interest and other deductions together come to roughly ₹5.45 lakh or more. Enter yours to check."
+   ],
+   [
+    "Is the employer's NPS contribution allowed in the new regime?",
+    "Yes, up to 14% of basic pay. It lowers the taxable income in both regimes."
+   ]
+  ],
+  "kw": [
+   "income tax on 15 lakh salary",
+   "15 lakh salary tax new regime",
+   "tax on 15 lakh income",
+   "15 lakh salary tax calculation",
+   "15 lakh ctc tax",
+   "tax for 15 lakh package"
+  ],
+  "rel": [
+   "tax-on-12-lakh-salary",
+   "tax-on-20-lakh-salary"
+  ]
+ },
+ "tax-on-20-lakh-salary": {
+  "tool": "income-tax-calculator",
+  "h1": "Income Tax on ₹20 Lakh Salary",
+  "t": "Income Tax on 20 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk",
+  "d": "Tax on a ₹20 lakh salary in FY 2026-27 is ₹1,92,400 in the new regime. Compare it with the old regime, slab by slab, with your deductions.",
+  "lead": "Set to a ₹20 lakh salary. Add your own income and deductions.",
+  "body": [
+   "A ₹20 lakh salary pays ₹1,92,400 in the new regime, including cess: the taxable income is ₹19.25 lakh after the standard deduction, and the slabs charge 5%, 10%, 15% and then 20% on the part above ₹16 lakh.",
+   "In the old regime it is ₹4,13,400 with no deductions, and still about ₹2,96,400 with ₹3.75 lakh of deductions including a home loan. At this income the old regime only wins with very large HRA and home loan claims."
+  ],
+  "f": [
+   [
+    "What is the monthly tax on 20 lakh?",
+    "About ₹16,033 a month in the new regime."
+   ],
+   [
+    "Which tax slab is a 20 lakh salary in?",
+    "In the new regime the top slab reached is 20% (₹16 to 20 lakh). In the old regime it is 30% (above ₹10 lakh)."
+   ],
+   [
+    "Does surcharge apply at 20 lakh?",
+    "No. Surcharge starts only when income is above ₹50 lakh."
+   ]
+  ],
+  "kw": [
+   "income tax on 20 lakh salary",
+   "20 lakh salary tax new regime",
+   "tax on 20 lakh income",
+   "20 lakh ctc tax",
+   "20 lakh salary tax calculation",
+   "tax for 20 lakh package"
+  ],
+  "rel": [
+   "tax-on-15-lakh-salary",
+   "tax-on-12-lakh-salary"
+  ]
+ }
+});
 // A search owned by a landing page is not claimed by its tool page as well.
 for (const L of Object.values(LANDINGS)) {
   if (KW[L.tool]) KW[L.tool] = KW[L.tool].filter((q) => L.kw.indexOf(q) === -1);
 }
 // Short URLs that match a tool exactly go to the tool, so one page ranks.
-const REDIRECTS = { '/jpg-to-pdf': '/tool/image-to-pdf', '/pdf-to-jpg': '/tool/pdf-to-image', '/passport-size-photo-maker': '/tool/photo-studio' };
+const REDIRECTS = { '/income-tax-calculator': '/tool/income-tax-calculator', '/emi-calculator': '/tool/emi-calculator', '/sip-calculator': '/tool/sip-calculator', '/fd-calculator': '/tool/fd-calculator', '/jpg-to-pdf': '/tool/image-to-pdf', '/pdf-to-jpg': '/tool/pdf-to-image', '/passport-size-photo-maker': '/tool/photo-studio' };
 
 const EXAM_CHECKED = 'September 2026';
 const EXAMS = {
@@ -4409,7 +5042,7 @@ function examSchema(slug) {
       'acceptedAnswer': { '@type': 'Answer', 'text': f[1] } })) }]);
 }
 
-const GROUPS = [["biodata-maker", "letter-maker", "cv-studio", "salary-slip", "rent-receipt", "invoice-maker", "id-card"], ["gst-calculator", "gstin-validator", "invoice-maker", "amount-in-words", "pan-aadhaar-validator", "salary-slip", "rent-receipt"], ["age-calculator", "cgpa-calculator", "exam-photo", "image-compressor", "cv-studio", "letter-maker"], ["photo-studio", "exam-photo", "image-compressor", "doc-scanner", "id-card", "cv-studio", "ocr-pdf", "image-to-pdf"], ["pdf-editor", "sign-pdf", "redact-pdf", "smart-redact", "clean-metadata", "unlock-pdf", "protect-pdf", "watermark-pdf", "remove-watermark", "number-pdf", "doc-integrity"], ["merge-pdf", "split-by-size", "organize-pdf", "compress-pdf", "resize-pdf", "impose-pdf", "clean-scan", "batch-process", "compare-pdf"], ["pdf-to-word", "word-to-pdf", "pdf-to-excel", "extract-tables", "sheet-to-pdf", "pdf-to-image", "image-to-pdf", "pdf-to-ppt", "extract-images", "translate-pdf", "ocr-pdf"], ["qr-maker", "qr-stamp", "invoice-maker", "mail-merge", "sheet-to-pdf"]];
+const GROUPS = [["income-tax-calculator","emi-calculator","sip-calculator","fd-calculator","salary-slip","rent-receipt","gst-calculator"], ["biodata-maker", "letter-maker", "cv-studio", "salary-slip", "rent-receipt", "invoice-maker", "id-card"], ["gst-calculator", "gstin-validator", "invoice-maker", "amount-in-words", "pan-aadhaar-validator", "salary-slip", "rent-receipt"], ["age-calculator", "cgpa-calculator", "exam-photo", "image-compressor", "cv-studio", "letter-maker"], ["photo-studio", "exam-photo", "image-compressor", "doc-scanner", "id-card", "cv-studio", "ocr-pdf", "image-to-pdf"], ["pdf-editor", "sign-pdf", "redact-pdf", "smart-redact", "clean-metadata", "unlock-pdf", "protect-pdf", "watermark-pdf", "remove-watermark", "number-pdf", "doc-integrity"], ["merge-pdf", "split-by-size", "organize-pdf", "compress-pdf", "resize-pdf", "impose-pdf", "clean-scan", "batch-process", "compare-pdf"], ["pdf-to-word", "word-to-pdf", "pdf-to-excel", "extract-tables", "sheet-to-pdf", "pdf-to-image", "image-to-pdf", "pdf-to-ppt", "extract-images", "translate-pdf", "ocr-pdf"], ["qr-maker", "qr-stamp", "invoice-maker", "mail-merge", "sheet-to-pdf"]];
 
 const FREE_COUNT = Object.values(TOOLS).filter((t) => !t.pro).length;
 const PRO_COUNT = Object.keys(TOOLS).length - FREE_COUNT;
@@ -5219,6 +5852,209 @@ Object.assign(GUIDES, {
   }
  }
 });
+/* ---------- v4.7: guides for the money calculators ---------- */
+Object.assign(GUIDES, {
+ "income-tax-calculator": {
+  "title": "How income tax is calculated in FY 2026-27",
+  "intro": [
+   "Your tax depends on your taxable income, which is your gross income minus the deductions your regime allows, and on the slab rates of the regime you choose. The new regime is the default; salaried people can still pick the old one each year when they file their return."
+  ],
+  "sections": [
+   {
+    "h": "New regime slabs",
+    "body": [
+     {
+      "ul": [
+       "Up to ₹4 lakh: nil",
+       "₹4 to 8 lakh: 5%",
+       "₹8 to 12 lakh: 10%",
+       "₹12 to 16 lakh: 15%",
+       "₹16 to 20 lakh: 20%",
+       "₹20 to 24 lakh: 25%",
+       "Above ₹24 lakh: 30%"
+      ]
+     },
+     "Salaried people and pensioners get a ₹75,000 standard deduction. If taxable income is ₹12 lakh or less, a rebate of up to ₹60,000 wipes out the tax, so a salary of ₹12.75 lakh pays nothing. Most other deductions, such as 80C, HRA and home loan interest on a self-occupied house, are not allowed; the employer's NPS contribution is."
+    ]
+   },
+   {
+    "h": "Old regime slabs",
+    "body": [
+     "Nil up to ₹2.5 lakh (₹3 lakh from 60 to 79 years, ₹5 lakh at 80 and above), 5% up to ₹5 lakh, 20% from ₹5 to 10 lakh and 30% above ₹10 lakh. The standard deduction is ₹50,000 and the rebate makes taxable income up to ₹5 lakh tax-free. In return you can claim deductions: 80C up to ₹1.5 lakh, 80D for health insurance, HRA, home loan interest up to ₹2 lakh, ₹50,000 more for NPS and others."
+    ]
+   },
+   {
+    "h": "Worked examples",
+    "body": [
+     {
+      "ul": [
+       "Salary ₹10 lakh: nil in the new regime; ₹1,06,600 in the old regime with no deductions, or ₹59,800 with ₹2.25 lakh of deductions.",
+       "Salary ₹15 lakh: ₹97,500 in the new regime; ₹1,87,200 in the old regime with ₹2.25 lakh of deductions.",
+       "Salary ₹20 lakh: ₹1,92,400 in the new regime; ₹2,96,400 in the old regime even with ₹3.75 lakh of deductions."
+      ]
+     },
+     "All figures include the 4% cess. Use the [salary slip generator](/tool/salary-slip) to lay out the monthly pay and the [rent receipt generator](/tool/rent-receipt) for an HRA claim."
+    ]
+   },
+   {
+    "h": "Surcharge and cess",
+    "body": [
+     "A surcharge of 10% applies above ₹50 lakh of income, 15% above ₹1 crore and 25% above ₹2 crore (and 37% above ₹5 crore in the old regime only), with marginal relief at each step. A 4% health and education cess is then added to the tax and surcharge."
+    ]
+   }
+  ],
+  "hi": {
+   "title": "इनकम टैक्स कैसे निकालें (FY 2026-27)",
+   "body": [
+    "नई टैक्स व्यवस्था में ₹4 लाख तक कोई टैक्स नहीं, ₹4–8 लाख पर 5%, ₹8–12 लाख पर 10%, ₹12–16 लाख पर 15%, ₹16–20 लाख पर 20%, ₹20–24 लाख पर 25% और ₹24 लाख से ऊपर 30% टैक्स है।",
+    "₹12 लाख तक की टैक्सेबल आय पर ₹60,000 तक की छूट (रिबेट) मिलती है, इसलिए वेतनभोगी लोगों के लिए ₹75,000 की स्टैंडर्ड डिडक्शन के साथ ₹12.75 लाख तक की सैलरी टैक्स-फ्री है।",
+    "पुरानी व्यवस्था में 80C, HRA, 80D और होम लोन ब्याज जैसी छूट मिलती है। कैलकुलेटर दोनों व्यवस्थाओं का टैक्स साथ-साथ दिखाता है और बताता है कि कौन सी सस्ती है।"
+   ]
+  }
+ },
+ "emi-calculator": {
+  "title": "How a loan EMI is worked out, and how prepayment saves interest",
+  "intro": [
+   "An EMI (equated monthly instalment) is the same amount every month, but what it pays for changes. Early EMIs are mostly interest; later ones are mostly principal. That is why a part payment in the early years saves so much."
+  ],
+  "sections": [
+   {
+    "h": "The EMI formula",
+    "body": [
+     "EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r is the monthly rate (the annual rate ÷ 12 ÷ 100) and n is the number of months. Banks call this the reducing-balance method: each month's interest is charged only on the balance still owed."
+    ]
+   },
+   {
+    "h": "Typical EMIs",
+    "body": [
+     {
+      "ul": [
+       "Home loan ₹30 lakh at 8.5% for 20 years: ₹26,035 a month, about ₹32.5 lakh of interest.",
+       "Home loan ₹50 lakh at 8.5% for 20 years: ₹43,391 a month.",
+       "Car loan ₹8 lakh at 9.5% for 5 years: ₹16,801 a month.",
+       "Personal loan ₹5 lakh at 12% for 3 years: ₹16,607 a month.",
+       "Education loan ₹10 lakh at 10% for 7 years: ₹16,601 a month."
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Prepayment",
+    "body": [
+     "A part payment is taken off the principal at once. If the EMI stays the same, the loan simply ends earlier. On the ₹30 lakh loan above, paying ₹5 lakh after the twelfth EMI ends the loan 73 EMIs early and saves about ₹14.1 lakh of interest. RBI rules do not let banks charge a prepayment penalty on floating-rate loans to individuals."
+    ]
+   },
+   {
+    "h": "Tax benefits on a home loan",
+    "body": [
+     "In the old regime you can claim up to ₹2 lakh of interest on a self-occupied house and up to ₹1.5 lakh of principal under 80C. The new regime does not allow these for a self-occupied house. The [income tax calculator](/tool/income-tax-calculator) shows which regime works out cheaper with your loan."
+    ]
+   }
+  ],
+  "hi": {
+   "title": "EMI कैसे निकालें",
+   "body": [
+    "EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), जहाँ P लोन की रकम, r मासिक ब्याज दर (सालाना दर ÷ 12 ÷ 100) और n महीनों की संख्या है।",
+    "₹30 लाख के होम लोन पर 8.5% ब्याज और 20 साल की अवधि पर EMI ₹26,035 होती है।",
+    "बीच में कुछ रकम जमा (प्रीपेमेंट) करने से मूलधन घटता है और लोन जल्दी खत्म होता है, जिससे ब्याज की बड़ी बचत होती है।"
+   ]
+  }
+ },
+ "sip-calculator": {
+  "title": "How SIP returns are calculated",
+  "intro": [
+   "A SIP (systematic investment plan) puts a fixed amount into a mutual fund every month. Each instalment buys units at that day's price and then compounds for the time it stays invested, so the early instalments do most of the growing."
+  ],
+  "sections": [
+   {
+    "h": "The formula",
+    "body": [
+     "FV = P × ((1 + i)^n − 1) ÷ i × (1 + i). P is the monthly amount, i is the expected yearly return ÷ 12 ÷ 100, and n is the number of months. For a lumpsum, FV = P × (1 + r ÷ 100)^years."
+    ]
+   },
+   {
+    "h": "Examples at an assumed 12% a year",
+    "body": [
+     {
+      "ul": [
+       "₹5,000 a month for 10 years: about ₹11.6 lakh on ₹6 lakh invested.",
+       "₹10,000 a month for 20 years: about ₹99.9 lakh on ₹24 lakh invested.",
+       "₹10,000 a month raised 10% every year for 20 years: about ₹1.99 crore on ₹68.7 lakh invested.",
+       "₹1 lakh invested once for 20 years: about ₹9.6 lakh."
+      ]
+     }
+    ]
+   },
+   {
+    "h": "Reaching ₹1 crore",
+    "body": [
+     "At 12% a year you need about ₹10,000 a month for 20 years, ₹19,800 for 15 years or ₹43,000 for 10 years. Starting earlier matters more than the amount: five extra years roughly halve the monthly SIP you need."
+    ]
+   },
+   {
+    "h": "Returns are not guaranteed",
+    "body": [
+     "Equity fund returns swing from year to year, and the long-run average can turn out lower than you assume. Try a cautious rate such as 8 to 10% as well, and remember the effect of inflation: at 6% inflation, ₹1 crore in 20 years buys what about ₹31 lakh buys today."
+    ]
+   }
+  ],
+  "hi": {
+   "title": "SIP रिटर्न कैसे निकालें",
+   "body": [
+    "SIP में हर महीने एक तय रकम म्यूचुअल फंड में लगती है। FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), जहाँ i = सालाना रिटर्न ÷ 12 ÷ 100।",
+    "12% सालाना रिटर्न मानकर ₹10,000 महीना 20 साल तक लगाने पर लगभग ₹1 करोड़ बनते हैं।",
+    "म्यूचुअल फंड का रिटर्न तय नहीं होता, इसलिए कम रिटर्न मानकर भी हिसाब देख लें।"
+   ]
+  }
+ },
+ "fd-calculator": {
+  "title": "How FD, RD and PPF interest is calculated",
+  "intro": [
+   "Fixed deposits, recurring deposits and PPF all pay compound interest, but they add it at different intervals. That interval, more than the headline rate, decides how much you end up with."
+  ],
+  "sections": [
+   {
+    "h": "Fixed deposit",
+    "body": [
+     "Most banks compound FD interest every quarter: maturity = P × (1 + r ÷ 400)^(4 × years). ₹1 lakh at 7% for a year becomes ₹1,07,186, an effective yield of 7.19%. If you take the interest out monthly or quarterly instead, it is paid as simple interest and does not compound. Banks deduct TDS once the interest from one bank passes ₹50,000 a year (₹1 lakh for senior citizens), unless you file Form 15G or 15H."
+    ]
+   },
+   {
+    "h": "Recurring deposit",
+    "body": [
+     "In an RD you deposit the same amount every month. Each instalment earns quarterly compounded interest for the months it stays in, so the first instalment earns the most and the last the least. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100 on ₹1,20,000 deposited."
+    ]
+   },
+   {
+    "h": "PPF",
+    "body": [
+     "The Public Provident Fund runs for 15 years and can be extended in blocks of 5 years. You can deposit ₹500 to ₹1,50,000 a year. Interest is worked out on the lowest balance between the 5th and the end of each month and added once a year, so deposit before 5 April to earn for the whole year. The rate is 7.1% for October to December 2026. Deposits qualify for 80C in the old regime, and the interest and maturity are tax-free."
+    ]
+   },
+   {
+    "h": "PPF maturity at 7.1%",
+    "body": [
+     {
+      "ul": [
+       "₹1 lakh a year for 15 years: about ₹27.1 lakh.",
+       "₹1.5 lakh a year for 15 years: about ₹40.7 lakh.",
+       "₹1.5 lakh a year for 20 years: about ₹66.6 lakh.",
+       "₹1.5 lakh a year for 25 years: about ₹1.03 crore."
+      ]
+     }
+    ]
+   }
+  ],
+  "hi": {
+   "title": "FD, RD और PPF का ब्याज कैसे निकालें",
+   "body": [
+    "ज़्यादातर बैंक FD पर हर तिमाही ब्याज जोड़ते हैं। ₹1 लाख की FD 7% पर एक साल में ₹1,07,186 हो जाती है।",
+    "RD में हर महीने की किस्त पर तिमाही चक्रवृद्धि ब्याज मिलता है।",
+    "PPF 15 साल का खाता है जिसमें सालाना ₹500 से ₹1,50,000 तक जमा कर सकते हैं। अक्टूबर–दिसंबर 2026 के लिए ब्याज दर 7.1% है और ब्याज टैक्स-फ्री है।"
+   ]
+  }
+ }
+});
 
 function guideHtml(slug) {
   const g = GUIDES[slug];
@@ -5293,7 +6129,7 @@ function toolSchema(slug) {
     'url': url,
     'description': t.d,
     'keywords': (KW[slug] || []).join(', '),
-    'applicationCategory': 'BusinessApplication',
+    'applicationCategory': t.fin ? 'FinanceApplication' : 'BusinessApplication',
     'operatingSystem': 'Any (runs in a web browser)',
     'isPartOf': { '@id': SITE + '/#site' },
     'publisher': { '@id': SITE + '/#org' },
