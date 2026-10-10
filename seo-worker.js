@@ -1313,6 +1313,10 @@ Object.assign(TOOLS, {
   "use": "For monthly MIS reports, sales reviews, management dashboards, and starting a Power BI or Looker Studio report from a spreadsheet.",
   "faq": [
    [
+    "My Excel is not a simple table. Will it work?",
+    "Yes. Title rows, merged or two-row headers, months or quarters across the columns, P&L statements, pivot-table exports with subtotals, bank statements, values in lakhs or crores and one sheet per month are all recognised and reshaped automatically, and the page lists what was changed."
+   ],
+   [
     "Which files work?",
     "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."
    ],
