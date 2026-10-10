@@ -5123,17 +5123,14 @@ function toolLink(slug) {
 }
 
 function allToolsNav() {
+  // Each group is a <details>, so phones get a short, tappable directory. Search engines still read closed details.
+  const group = (title, items) => '<details class="dir-group"><summary><h2>' + esc(title) + ' <span class="n">' + items.length + '</span></h2></summary>' +
+    '<ul>' + items.join('') + '</ul></details>';
   return '<section class="prose" id="all-tools" style="margin-top:32px">' +
-    '<h2>All DocBrisk tools</h2>' +
-    '<ul style="columns:2;column-gap:28px;padding-left:18px">' +
-    Object.keys(TOOLS).map((s) => '<li>' + toolLink(s) + '</li>').join('') +
-    '</ul><h2 style="margin-top:24px">Photo and signature size by exam</h2>' +
-    '<ul style="columns:2;column-gap:28px;padding-left:18px">' +
-    Object.keys(EXAMS).map((s) => '<li><a href="/exam/' + s + '">' + esc(examH1(EXAMS[s])) + '</a></li>').join('') +
-    '</ul><h2 style="margin-top:24px">Popular guides</h2>' +
-    '<ul style="columns:2;column-gap:28px;padding-left:18px">' +
-    Object.keys(LANDINGS).map((s) => '<li><a href="/' + s + '">' + esc(LANDINGS[s].h1) + '</a></li>').join('') +
-    '</ul></section>';
+    group('All DocBrisk tools', Object.keys(TOOLS).map((s) => '<li>' + toolLink(s) + '</li>')) +
+    group('Photo and signature size by exam', Object.keys(EXAMS).map((s) => '<li><a href="/exam/' + s + '">' + esc(examH1(EXAMS[s])) + '</a></li>')) +
+    group('Popular guides', Object.keys(LANDINGS).map((s) => '<li><a href="/' + s + '">' + esc(LANDINGS[s].h1) + '</a></li>')) +
+    '</section>';
 }
 
 function faqFor(slug) {
@@ -6194,7 +6191,7 @@ function landingAboutHtml(slug) {
   const L = LANDINGS[slug], t = TOOLS[L.tool];
   const faq = landingFaq(slug).map((f) => '<details><summary>' + esc(f[0]) + '</summary><p>' + esc(f[1]) + '</p></details>').join('');
   const rel = L.rel.filter((s) => LANDINGS[s]).map((s) => '<li><a href="/' + s + '">' + esc(LANDINGS[s].h1) + '</a></li>').join('');
-  return '<div id="seo-about" class="wrap">' +
+  return '<div id="seo-about" class="wrap seo-landing">' +
     '<section class="prose" id="tool-about" style="margin-top:56px">' +
       '<h2>About ' + esc(L.h1.replace(/\s*\(.*\)$/, '')) + '</h2>' +
       L.body.map((p) => '<p>' + esc(p) + '</p>').join('') + landingTableHtml(L) +
