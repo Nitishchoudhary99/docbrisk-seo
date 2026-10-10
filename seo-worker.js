@@ -71,7 +71,7 @@ const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
 const LASTMOD = '2026-10-10';          // bump when page content changes
-const BUILD = '2026-10-10a';              // bump on every deploy of this Worker
+const BUILD = '2026-10-10b';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
@@ -650,8 +650,8 @@ const TOOLS = {
  },
  "invoice-maker": {
   "t": "Free GST Invoice Generator",
-  "d": "Build a professional invoice with GST or flat tax, line items, HSN codes and a scannable UPI QR for instant payment.",
-  "l": "Build a professional invoice with GST (CGST/SGST or IGST) or flat tax, line items with HSN and SAC codes, and a scannable UPI QR code carrying the exact total so clients can pay instantly.",
+  "d": "Make GST tax invoices, quotations and proformas with per-item GST rates, auto IGST, logo, signature, bank details, amount in words and a UPI QR.",
+  "l": "Build a professional tax invoice, quotation, proforma, estimate, bill of supply, credit note or delivery challan. Each line has its own HSN or SAC code, unit and GST rate, so mixed 5%, 12% and 18% items are taxed correctly, and the CGST and SGST or IGST split is chosen automatically from the seller's and buyer's GSTINs, with the place of supply. Add your logo, a signature or stamp, bank details for NEFT and IMPS, shipping charges, round-off, the amount in words and a tax summary by HSN, plus a scannable UPI QR carrying the exact total. Long invoices continue onto more pages, clients can be saved for next time, and the line items export to Excel.",
   "steps": [
    "Enter your business and client details.",
    "Add line items with HSN or SAC codes and choose GST (CGST/SGST or IGST) or flat tax.",
