@@ -70,34 +70,42 @@ const REPO_RAW = 'https://raw.githubusercontent.com/Nitishchoudhary99/My-website
 const ORIGIN_HTML = REPO_RAW + '/index.html';
 
 const SITE = 'https://docbrisk.com';
-const LASTMOD = '2026-10-10';          // bump when page content changes
-const BUILD = '2026-10-10d';              // bump on every deploy of this Worker
+const LASTMOD = '2026-10-11';          // bump when page content changes
+const BUILD = '2026-10-11a';              // bump on every deploy of this Worker
 const SW_ENABLED = true;                // false = ship a service worker that removes itself
 const PRO_PRICE = 99;
 
 const TOOLS = {
  "photo-studio": {
   "t": "Passport Photo Maker & Background Remover",
-  "d": "Remove or replace the background, crop to official passport, visa and ID specs for 14 countries, enhance, and lay out a ready-to-print sheet.",
-  "l": "Remove or replace a photo background, crop to official passport, visa and ID specifications for 14 countries, enhance the image, and lay out a ready-to-print sheet.",
+  "d": "Upload any photo: the face is found, the background replaced and the photo cropped to the head-size rule for 16 passport, visa and ID formats, then checked.",
+  "l": "Upload any front-facing photo, even a selfie or a sideways phone picture. DocBrisk turns it upright, finds the face with 478 landmark points, removes the background (hair included) and crops the photo so the head height and eye line meet the rule of the selected document: India passport, visa, PAN and Aadhaar, US passport, visa and the DS-160 upload, UK, Schengen, Canada, Australia, China, Japan and Germany. A photo check then confirms head size, eye height, a centred and level face, open eyes, a closed mouth, even light and sharpness, with a one-click fix for most problems. Auto fix brightens a dark face, removes a yellow cast and evens out light from one side. Photos of pets, products and food are cut out too: the main subject is picked automatically and you can tap to add or remove parts. Download the exact pixel size and KB a portal asks for, a transparent PNG, or a sheet of copies to print. Everything runs on your device.",
   "steps": [
-   "Upload a portrait photo.",
-   "Remove or replace the background, then choose the passport, visa or ID size for your country.",
-   "Adjust the enhancement, set a KB cap if your portal needs one, and download a single photo or a ready-to-print sheet."
+   "Upload any front-facing photo, even a selfie.",
+   "The face is found, the background replaced and the photo cropped to your document's head-size rule.",
+   "Look over the photo check, fix anything flagged with one click, then download the exact size or a print sheet."
   ],
-  "use": "Handy for passport, visa, exam-form and government-portal photos that need an exact size and file limit.",
+  "use": "Handy for passport, visa, exam-form and government-portal photos that need an exact size and file limit, and for clean product and pet cut-outs.",
   "faq": [
    [
     "Can I make a passport photo without Photoshop?",
-    "Yes. The Photo Studio removes the background, crops to official specifications for 14 countries including India, the US, the UK, Schengen, Canada, Australia, China and Japan, and shows crown and chin compliance guides. It then lays out a print sheet so you can get physical copies at any photo counter."
+    "Yes. Upload a photo and the Photo Studio removes the background, crops the photo so the head size and eye line meet the rule for your document (India, the US, the UK, Schengen, Canada, Australia, China, Japan and more), checks it, and lays out a print sheet for any photo counter."
    ],
    [
-    "How does background removal work without an AI model download?",
-    "It runs a border-seeded flood fill in perceptual colour space: every edge pixel becomes a seed, and connected regions within your tolerance are treated as backdrop. That is the right model for ID photos, where the subject never touches all four edges but the backdrop always does. A keep/erase brush handles anything the automatic pass misses."
+    "Does it check that the photo meets the rules?",
+    "Yes. It measures head height and eye height against the selected document and checks that the face is centred and straight, the eyes are open, the mouth is closed, the light on the face is even and the photo is sharp and detailed enough to print. Each problem is explained, most with a one-click fix."
+   ],
+   [
+    "Is my photo uploaded for the AI background removal?",
+    "No. The face and person detectors run inside your browser. They download once and then work offline; your photo never leaves the device."
+   ],
+   [
+    "Can it remove the background from a product or a pet?",
+    "Yes. Photos without a face are treated as objects: the main subject (or every subject on a plain backdrop) is picked out automatically, and you can tap to add or remove parts. Download a transparent PNG of the whole photo."
    ],
    [
     "How do I make a passport photo under 100 KB?",
-    "In the Photo Studio's Export tab, set a KB cap. The tool reduces JPEG quality step by step until the file fits the limit, which is what most government and university portals require."
+    "In the Photo Studio's Export tab, set a KB cap. The tool reduces JPEG quality step by step until the file fits the limit, which is what most government and university portals require. The US DS-160 preset sets 600 by 600 pixels and 240 KB for you."
    ]
   ],
   "st": "Passport Size Photo Maker & Background Remover"
@@ -1363,7 +1371,7 @@ Object.assign(TOOLS, {
    and the WebApplication "keywords" property. Keep them real queries, and
    keep the visible list short: stuffing a page with keywords hurts rankings. */
 const KW = {
-  "photo-studio": ["passport size photo maker", "passport photo online free", "remove background from photo", "white background photo maker", "visa photo maker"],
+  "photo-studio": ["passport size photo maker", "passport photo online free", "remove background from photo", "white background photo maker", "visa photo maker", "ds-160 photo", "passport photo checker"],
   "exam-photo": ["exam photo resizer", "photo and signature resize for exam", "resize photo to 20kb", "resize signature to 20kb", "ssc photo resize", "railway photo signature resize", "ibps photo signature resize", "neet photo resize"],
   "doc-scanner": ["document scanner online", "scan document with phone", "camscanner alternative", "photo to scanned pdf"],
   "cv-studio": ["resume builder free", "ats resume maker", "cv maker online free", "resume format for freshers", "ats friendly resume template"],
